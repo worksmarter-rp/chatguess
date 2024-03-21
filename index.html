@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guessing Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Guessing Game</h1>
+    <div id="game">
+        <input type="number" id="min-range" placeholder="Minimum Range">
+        <input type="number" id="max-range" placeholder="Maximum Range">
+        <input type="number" id="guesses" placeholder="Number of Guesses">
+        <button id="start-game">Start Game</button>
+
+        <div id="gameplay" style="display: none;">
+            <input type="number" id="user-guess" placeholder="Your Guess">
+            <button id="guess">Guess</button>
+            <div id="feedback"></div>
+            <div id="attempts"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
