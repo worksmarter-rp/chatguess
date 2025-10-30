@@ -161,7 +161,7 @@
 
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
       /* Guess history */
-    .history { margin-top: 12px; }
+    .history { margin-top: 12px; max-height: 30vh; overflow: auto; }
     .history h3 { margin: 4px 0 8px; font-size: 1rem; color: var(--muted); }
     .history ol { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
     .history li { line-height: 1.3; }
@@ -262,7 +262,7 @@
     </section>
 
     <div class="footer">
-      <span id="version">v1.2</span>
+      <span id="version">v1.3</span>
     </div>
   </main>
 
@@ -303,6 +303,7 @@
     let lowerBound = null; // narrows after each guess
     let upperBound = null;
     let history = [];      // { value, relation }
+    let guessed = new Set(); //
 
     // Ensure mobile shows numeric keypad aggressively
     [minInput, maxInput, guessesInput, userGuess].forEach(el => {
@@ -386,6 +387,7 @@
       feedback.className = 'feedback';
       hide(feedback);
       history = [];
+      guessed = new Set();
       renderHistory();
       userGuess.value = '';
       guessBtn.disabled = true;
@@ -409,6 +411,13 @@
         postGuessCleanup();
         return;
       }
+      if (guessed.has(val)) {
+  say(`Already tried ${val}. Pick a new number.`, 'warn');
+  clearAndFocus();      // your helper that clears the field & refocuses
+  return;
+}
+guessed.add(val);
+
 
       remaining -= 1;
       setText(attemptsVal, Math.max(remaining, 0));
@@ -424,6 +433,7 @@
         setText(attemptsVal, remaining);
         // Clear for next round
         history = [];
+        guessed = new Set();
         renderHistory();
         postGuessCleanup(true);
         return;
@@ -440,6 +450,7 @@
         setText(rangeVal, `${min} – ${max}`);
         setText(attemptsVal, remaining);
         history = [];
+        guessed = new Set();
         renderHistory();
         postGuessCleanup(true);
         return;
@@ -514,19 +525,24 @@
     }
 
     function renderHistory() {
-      historyList.innerHTML = '';
-      if (history.length === 0) {
-        historyEl.hidden = true;
-        return;
-      }
-      historyEl.hidden = false;
-      history.forEach((h, i) => {
-        const li = document.createElement('li');
-        li.className = h.relation;
-        li.textContent = `${i+1}. ${h.value} — ${h.relation === 'lo' ? 'too low' : h.relation === 'hi' ? 'too high' : 'correct'}`;
-        historyList.appendChild(li);
-      });
-    }
+  historyList.innerHTML = '';
+  if (history.length === 0) { historyEl.hidden = true; return; }
+  historyEl.hidden = false;
+
+  // Newest first to reduce scrolling
+  for (let i = history.length - 1; i >= 0; i--) {
+    const h = history[i];
+    const li = document.createElement('li');
+    li.className = h.relation; // 'lo' | 'hi' | 'ok'
+    const idx = i + 1; // chronological index
+    li.textContent = `${idx}. ${h.value} — ${h.relation === 'lo' ? 'too low' : h.relation === 'hi' ? 'too high' : 'correct'}`;
+    historyList.appendChild(li);
+  }
+
+  // Keep newest (top) visible
+  historyList.parentElement.scrollTop = 0;
+}
+
 
     function postGuessCleanup(select = true) {
       userGuess.value = '';
