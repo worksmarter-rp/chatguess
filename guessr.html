@@ -19,16 +19,15 @@
     body{
       margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       background:radial-gradient(1200px 800px at 70% -10%, rgba(79,156,249,.12), transparent), var(--bg);
-      color:var(--text);display:grid;place-items:start center;padding:clamp(12px,2.5vw,28px)
+      color:var(--text);display:grid;place-items:start center;padding:clamp(12px,2.5vw,24px)
     }
     .wrap{width:min(100%,720px);background:var(--panel);border-radius:var(--radius);
-      box-shadow:0 10px 30px rgba(0,0,0,.18);padding:clamp(12px,3vw,24px);
+      box-shadow:0 10px 30px rgba(0,0,0,.18);padding:clamp(12px,3vw,22px);
       border:1px solid rgba(255,255,255,.06)
     }
     h1{margin:0 0 8px;font-size:clamp(1.2rem,2.4vw,1.6rem)}
-    p.sub{margin:0 0 12px;color:var(--muted);font-size:.95rem}
+    p.sub{margin:0 0 10px;color:var(--muted);font-size:.95rem}
 
-    /* Controls */
     .grid{display:grid;gap:10px}
     @media(min-width:560px){.grid-3{grid-template-columns:repeat(3,1fr)} .grid-2{grid-template-columns:2fr 1fr}}
     label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:6px}
@@ -41,10 +40,8 @@
     input[type=number]{-moz-appearance:textfield}
     .btn{appearance:none;border:0;border-radius:12px;padding:12px 16px;font-weight:600;font-size:1rem;cursor:pointer;background:var(--accent);color:#fff}
     .btn.secondary{background:transparent;border:1px solid rgba(148,163,184,.35);color:var(--text)}
-    .btn.ghost{background:transparent;border:0;color:var(--muted);padding:6px 8px}
     .btn:disabled{opacity:.55;cursor:not-allowed}
 
-    /* Gameplay status */
     .status{margin-top:10px;display:grid;gap:8px}
     .pill{display:flex;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(148,163,184,.12);color:var(--muted);width:fit-content}
     .pill strong{color:var(--text)}
@@ -53,6 +50,7 @@
     .feedback.bad{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.35)}
     .feedback.good{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.35)}
 
+    /* History: newest first + constrained height so it's above the keypad */
     .history{margin-top:8px;max-height:32vh;overflow:auto}
     .history h3{margin:4px 0 8px;font-size:1rem;color:var(--muted)}
     .history ol{margin:0;padding-left:18px;display:grid;gap:4px}
@@ -60,7 +58,7 @@
     .history .lo,.history .hi{color:var(--warning)}
     .history .ok{color:var(--accent-2)}
 
-    /* Collapsible settings takes no space while closed */
+    /* Collapsible settings kept out of the way during play */
     details.settings { margin-bottom: 8px; }
     details.settings[open]{ margin-bottom: 12px; }
     details.settings summary {
@@ -69,7 +67,7 @@
     }
     details.settings summary::-webkit-details-marker{display:none}
 
-    /* Version chip: tiny & out of the way */
+    /* Tiny version chip */
     .version {
       position: fixed; right: 8px; bottom: 8px; opacity:.5; font-size:.78rem; color:var(--muted);
       background: rgba(0,0,0,.15); border:1px solid rgba(255,255,255,.08); border-radius:8px; padding:2px 6px;
@@ -107,18 +105,21 @@
       </div>
     </details>
 
-    <!-- Gameplay: minimal footprint -->
+    <!-- Gameplay: minimal -->
     <section id="gameplay">
       <label class="sr-only" for="user-guess">Your Guess</label>
       <input id="user-guess" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Enter a number" enterkeyhint="go" />
       <button id="guess" class="btn" type="button" disabled style="margin-top:8px">Guess</button>
 
+      <!-- Keep feedback small and close to the input -->
+      <div id="feedback" class="feedback" hidden style="margin-top:8px"></div>
+
       <div class="status" aria-live="polite" aria-atomic="true">
         <div class="pill">Range: <strong id="range-val"></strong></div>
         <div class="pill">Attempts left: <strong id="attempts-val"></strong></div>
-        <div id="feedback" class="feedback" hidden></div>
       </div>
 
+      <!-- History sits close to input so it remains visible above the keypad -->
       <div id="history" class="history" hidden>
         <h3>Guess history</h3>
         <ol id="history-list"></ol>
@@ -126,7 +127,7 @@
     </section>
   </main>
 
-  <div class="version">v1.3.2</div>
+  <div class="version">v1.3.3</div>
 
   <script>
     // ---- Element references ----
@@ -138,7 +139,6 @@
     const startBtn = $('#start-game');
     const newRoundBtn = $('#new-round');
 
-    const gameplay = $('#gameplay');
     const userGuess = $('#user-guess');
     const guessBtn = $('#guess');
 
@@ -155,7 +155,6 @@
     let guessed = new Set();     // prevent duplicate guesses
 
     // ---- Helpers ----
-    const show = (el) => el.hidden = false;
     const hide = (el) => el.hidden = true;
     const setText = (el, t) => el.textContent = t;
     const randInt = (a,b) => Math.floor(Math.random()*(b-a+1))+a;
@@ -163,7 +162,7 @@
     function say(msg, tone='info'){
       feedback.className = 'feedback ' + (tone==='good'?'good':tone==='bad'?'bad':tone==='warn'?'warn':'');
       feedback.textContent = msg;
-      show(feedback);
+      feedback.hidden = false;
     }
     function focusGuess(select=true){
       userGuess.focus({ preventScroll:true });
@@ -174,20 +173,25 @@
       guessBtn.disabled = true;
       focusGuess(true);
     }
+
     function renderHistory(){
       historyList.innerHTML = '';
       if(history.length === 0){ historyEl.hidden = true; return; }
       historyEl.hidden = false;
-      // Newest first
+
+      // Newest first; display the correct guess number
       for(let i = history.length - 1; i >= 0; i--){
         const h = history[i];
         const li = document.createElement('li');
         li.className = h.relation; // 'lo' | 'hi' | 'ok'
-        const idx = i + 1;
-        li.textContent = `${idx}. ${h.value} — ${h.relation==='lo'?'too low':h.relation==='hi'?'too high':'correct'}`;
+        const displayNum = i + 1;  // true chronological number
+        li.textContent = `${displayNum}. ${h.value} — ${h.relation==='lo'?'too low':h.relation==='hi'?'too high':'correct'}`;
         historyList.appendChild(li);
       }
+
+      // Keep newest in view with soft nudge (works well with big keypads)
       historyList.parentElement.scrollTop = 0;
+      historyEl.scrollIntoView({ block: 'nearest' });
     }
 
     // Prevent accidental wheel changes on number inputs
@@ -216,17 +220,15 @@
       secret = randInt(min, max);
 
       history = []; guessed = new Set();
-      setText(rangeVal, `${min} – ${max}`); // always show static min–max
+      setText(rangeVal, `${min} – ${max}`); // always static min–max
       setText(attemptsVal, remaining);
-      hide(feedback);
+      feedback.hidden = true;
       renderHistory();
 
-      // Collapse settings to free space; keep only gameplay visible
+      // Collapse settings to free space; keep gameplay visible
       settings.open = false;
 
-      userGuess.value = '';
-      guessBtn.disabled = true;
-      focusGuess(true);
+      clearAndFocus();
     });
 
     // New round with same settings
@@ -235,11 +237,11 @@
       secret = randInt(min, max);
       remaining = attempts;
       history = []; guessed = new Set();
-      setText(rangeVal, `${min} – ${max}`); // static range
+      setText(rangeVal, `${min} – ${max}`);
       setText(attemptsVal, remaining);
-      hide(feedback);
+      feedback.hidden = true;
       renderHistory();
-      settings.open = false; // collapse again
+      settings.open = false;
       clearAndFocus();
       say('New round ready.');
     });
@@ -261,7 +263,7 @@
         renderHistory();
         say(`Correct: ${val}.`, 'good');
 
-        // Auto-arm a new secret but keep UI minimal; history clears to keep fresh round clean
+        // Auto-arm a new secret
         secret = randInt(min, max);
         remaining = attempts;
         setText(rangeVal, `${min} – ${max}`);
