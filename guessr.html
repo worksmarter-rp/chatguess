@@ -16,34 +16,66 @@
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;background:radial-gradient(1200px 800px at 70% -10%, rgba(79,156,249,.12), transparent), var(--bg);color:var(--text);display:grid;place-items:start center;padding:clamp(16px,2.5vw,32px)}
-    .wrap{width:min(100%,720px);background:var(--panel);border-radius:var(--radius);box-shadow:0 10px 30px rgba(0,0,0,.18);padding:clamp(16px,3vw,28px);border:1px solid rgba(255,255,255,.06)}
-    h1{margin:0 0 8px;font-size:clamp(1.25rem,2.6vw,1.75rem)}
-    p.sub{margin:0 0 16px;color:var(--muted)}
-    .grid{display:grid;gap:12px}
-    @media(min-width:560px){.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:2fr 1fr}}
+    body{
+      margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      background:radial-gradient(1200px 800px at 70% -10%, rgba(79,156,249,.12), transparent), var(--bg);
+      color:var(--text);display:grid;place-items:start center;padding:clamp(12px,2.5vw,28px)
+    }
+    .wrap{width:min(100%,720px);background:var(--panel);border-radius:var(--radius);
+      box-shadow:0 10px 30px rgba(0,0,0,.18);padding:clamp(12px,3vw,24px);
+      border:1px solid rgba(255,255,255,.06)
+    }
+    h1{margin:0 0 8px;font-size:clamp(1.2rem,2.4vw,1.6rem)}
+    p.sub{margin:0 0 12px;color:var(--muted);font-size:.95rem}
+
+    /* Controls */
+    .grid{display:grid;gap:10px}
+    @media(min-width:560px){.grid-3{grid-template-columns:repeat(3,1fr)} .grid-2{grid-template-columns:2fr 1fr}}
     label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:6px}
-    input[type="number"],input[type="text"]{width:100%;border:1px solid rgba(148,163,184,.3);background:rgba(255,255,255,.03);color:var(--text);padding:12px 14px;border-radius:12px;font-size:1rem;outline:none}
+    input[type="number"],input[type="text"]{
+      width:100%;border:1px solid rgba(148,163,184,.3);background:rgba(255,255,255,.03);color:var(--text);
+      padding:12px 14px;border-radius:12px;font-size:1rem;outline:none
+    }
     input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,156,249,.15)}
     input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
     input[type=number]{-moz-appearance:textfield}
     .btn{appearance:none;border:0;border-radius:12px;padding:12px 16px;font-weight:600;font-size:1rem;cursor:pointer;background:var(--accent);color:#fff}
     .btn.secondary{background:transparent;border:1px solid rgba(148,163,184,.35);color:var(--text)}
+    .btn.ghost{background:transparent;border:0;color:var(--muted);padding:6px 8px}
     .btn:disabled{opacity:.55;cursor:not-allowed}
-    .status{margin-top:14px;display:grid;gap:8px}
-    .pill{display:inline-flex;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(148,163,184,.12);color:var(--muted)}
+
+    /* Gameplay status */
+    .status{margin-top:10px;display:grid;gap:8px}
+    .pill{display:flex;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(148,163,184,.12);color:var(--muted);width:fit-content}
     .pill strong{color:var(--text)}
     .feedback{padding:12px 14px;border-radius:12px;background:rgba(79,156,249,.1);border:1px solid rgba(79,156,249,.25)}
     .feedback.warn{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.35)}
     .feedback.bad{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.35)}
     .feedback.good{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.35)}
-    .history{margin-top:12px;max-height:30vh;overflow:auto}
+
+    .history{margin-top:8px;max-height:32vh;overflow:auto}
     .history h3{margin:4px 0 8px;font-size:1rem;color:var(--muted)}
     .history ol{margin:0;padding-left:18px;display:grid;gap:4px}
     .history li{line-height:1.3}
     .history .lo,.history .hi{color:var(--warning)}
     .history .ok{color:var(--accent-2)}
-    .footer{margin-top:20px;color:var(--muted);font-size:.85rem;display:flex;justify-content:flex-end}
+
+    /* Collapsible settings takes no space while closed */
+    details.settings { margin-bottom: 8px; }
+    details.settings[open]{ margin-bottom: 12px; }
+    details.settings summary {
+      list-style:none; cursor:pointer; user-select:none; padding:6px 8px; width:fit-content;
+      color:var(--muted); border-radius:8px; border:1px solid rgba(148,163,184,.25); background:transparent;
+    }
+    details.settings summary::-webkit-details-marker{display:none}
+
+    /* Version chip: tiny & out of the way */
+    .version {
+      position: fixed; right: 8px; bottom: 8px; opacity:.5; font-size:.78rem; color:var(--muted);
+      background: rgba(0,0,0,.15); border:1px solid rgba(255,255,255,.08); border-radius:8px; padding:2px 6px;
+      pointer-events:none;
+    }
+
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   </style>
 </head>
@@ -52,9 +84,10 @@
     <h1>Guessing Game</h1>
     <p class="sub">Pick a range, set your attempts, then guess the number.</p>
 
-    <!-- Setup (NO FORM submit; no URL params) -->
-    <div id="setup" role="group" aria-describedby="setup-help">
-      <div class="grid grid-3">
+    <!-- Collapsible: settings + new round -->
+    <details class="settings" id="settings">
+      <summary>Settings & New Round</summary>
+      <div class="grid grid-3" style="margin-top:8px">
         <div>
           <label for="min-range">Minimum</label>
           <input id="min-range" type="number" inputmode="numeric" pattern="[0-9]*" placeholder="e.g., 1" step="1" />
@@ -65,26 +98,20 @@
         </div>
         <div>
           <label for="guesses">Attempts</label>
-          <input id="guesses" type="number" inputmode="numeric" pattern="[0-9]*" placeholder="e.g., 7" min="1" step="1" />
+          <input id="guesses" type="number" inputmode="numeric" pattern="[0-9]*" placeholder="e.g., 8" min="1" step="1" />
         </div>
       </div>
-      <div class="grid grid-2" style="margin-top:12px">
+      <div class="grid grid-2" style="margin-top:10px">
         <button id="start-game" class="btn" type="button">Start Game</button>
-        <button id="reset-setup" class="btn secondary" type="button">Reset</button>
-      </div>
-      <p id="setup-help" class="sr-only">Enter minimum and maximum numbers then how many attempts you want. Press Start Game to begin.</p>
-    </div>
-
-    <!-- Gameplay -->
-    <section id="gameplay" class="grid" hidden>
-      <div>
-        <label for="user-guess">Your Guess</label>
-        <input id="user-guess" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Enter a number" enterkeyhint="go" />
-      </div>
-      <div class="grid grid-2">
-        <button id="guess" class="btn" type="button" disabled>Guess</button>
         <button id="new-round" class="btn secondary" type="button">New Round</button>
       </div>
+    </details>
+
+    <!-- Gameplay: minimal footprint -->
+    <section id="gameplay">
+      <label class="sr-only" for="user-guess">Your Guess</label>
+      <input id="user-guess" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Enter a number" enterkeyhint="go" />
+      <button id="guess" class="btn" type="button" disabled style="margin-top:8px">Guess</button>
 
       <div class="status" aria-live="polite" aria-atomic="true">
         <div class="pill">Range: <strong id="range-val"></strong></div>
@@ -97,23 +124,23 @@
         <ol id="history-list"></ol>
       </div>
     </section>
-
-    <div class="footer"><span id="version">v1.3.1</span></div>
   </main>
+
+  <div class="version">v1.3.2</div>
 
   <script>
     // ---- Element references ----
     const $ = (s) => document.querySelector(s);
+    const settings = $('#settings');
     const minInput = $('#min-range');
     const maxInput = $('#max-range');
     const guessesInput = $('#guesses');
     const startBtn = $('#start-game');
-    const resetBtn = $('#reset-setup');
+    const newRoundBtn = $('#new-round');
 
     const gameplay = $('#gameplay');
     const userGuess = $('#user-guess');
     const guessBtn = $('#guess');
-    const newRoundBtn = $('#new-round');
 
     const feedback = $('#feedback');
     const rangeVal = $('#range-val');
@@ -124,7 +151,6 @@
     // ---- State ----
     let secret = null, min = null, max = null;
     let attempts = 0, remaining = 0;
-    let lowerBound = null, upperBound = null;
     let history = [];            // [{ value, relation }]
     let guessed = new Set();     // prevent duplicate guesses
 
@@ -139,8 +165,6 @@
       feedback.textContent = msg;
       show(feedback);
     }
-    const toast = say; // same UI for now
-
     function focusGuess(select=true){
       userGuess.focus({ preventScroll:true });
       if(select) userGuess.select?.();
@@ -150,48 +174,39 @@
       guessBtn.disabled = true;
       focusGuess(true);
     }
-
-    function pushHistory(value, relation){ // 'lo' | 'hi' | 'ok'
-      if(relation==='lo') lowerBound = Math.max(lowerBound, value+1);
-      if(relation==='hi') upperBound = Math.min(upperBound, value-1);
-      setText(rangeVal, `${lowerBound} – ${upperBound}`);
-
-      history.push({ value, relation });
-      renderHistory();
-    }
-
     function renderHistory(){
       historyList.innerHTML = '';
       if(history.length === 0){ historyEl.hidden = true; return; }
       historyEl.hidden = false;
-      // Newest first to reduce scrolling
+      // Newest first
       for(let i = history.length - 1; i >= 0; i--){
         const h = history[i];
         const li = document.createElement('li');
-        li.className = h.relation;
-        const idx = i + 1; // original chronological index
+        li.className = h.relation; // 'lo' | 'hi' | 'ok'
+        const idx = i + 1;
         li.textContent = `${idx}. ${h.value} — ${h.relation==='lo'?'too low':h.relation==='hi'?'too high':'correct'}`;
         historyList.appendChild(li);
       }
-      historyList.parentElement.scrollTop = 0; // keep newest visible
+      historyList.parentElement.scrollTop = 0;
     }
 
     // Prevent accidental wheel changes on number inputs
-    ;[minInput,maxInput,guessesInput].forEach(el=>{
+    [minInput,maxInput,guessesInput].forEach(el=>{
       el.addEventListener('wheel', evt => el===document.activeElement && evt.preventDefault(), { passive:false });
     });
 
-    // Enable Guess button when there is some input
+    // Guess button enablement and Enter-to-guess
     userGuess.addEventListener('input', () => { guessBtn.disabled = userGuess.value.trim() === ''; });
     userGuess.addEventListener('keydown', (e)=>{ if(e.key==='Enter' && !guessBtn.disabled){ e.preventDefault(); handleGuess(); } });
+    guessBtn.addEventListener('click', handleGuess);
 
-    // ---- Start Game (NO navigation; NO URL params) ----
+    // ---- Start Game (no URL params; no form submit) ----
     startBtn.addEventListener('click', () => {
       const minVal = parseInt(minInput.value,10);
       const maxVal = parseInt(maxInput.value,10);
       const tries  = parseInt(guessesInput.value,10);
 
-      if(Number.isNaN(minVal) || Number.isNaN(maxVal) || Number.isNaN(tries)) { say('Fill all fields with valid numbers.', 'warn'); return; }
+      if(Number.isNaN(minVal) || Number.isNaN(maxVal) || Number.isNaN(tries)){ say('Fill all fields with valid numbers.', 'warn'); return; }
       if(tries < 1){ say('Attempts must be at least 1.', 'warn'); return; }
 
       min = Math.min(minVal, maxVal);
@@ -200,39 +215,34 @@
       remaining = tries;
       secret = randInt(min, max);
 
-      lowerBound = min; upperBound = max;
       history = []; guessed = new Set();
-      setText(rangeVal, `${min} – ${max}`);
+      setText(rangeVal, `${min} – ${max}`); // always show static min–max
       setText(attemptsVal, remaining);
       hide(feedback);
       renderHistory();
 
-      show(gameplay);
+      // Collapse settings to free space; keep only gameplay visible
+      settings.open = false;
+
       userGuess.value = '';
       guessBtn.disabled = true;
       focusGuess(true);
     });
 
-    resetBtn.addEventListener('click', ()=>{
-      minInput.value = ''; maxInput.value = ''; guessesInput.value = '';
-      minInput.focus();
-    });
-
+    // New round with same settings
     newRoundBtn.addEventListener('click', ()=>{
-      if(min==null || max==null || attempts==null){ say('Set up the game first.', 'warn'); return; }
+      if(min==null || max==null || attempts==null){ say('Start a game first.', 'warn'); return; }
       secret = randInt(min, max);
       remaining = attempts;
-      lowerBound = min; upperBound = max;
-      setText(rangeVal, `${min} – ${max}`);
-      setText(attemptsVal, remaining);
       history = []; guessed = new Set();
+      setText(rangeVal, `${min} – ${max}`); // static range
+      setText(attemptsVal, remaining);
       hide(feedback);
       renderHistory();
+      settings.open = false; // collapse again
       clearAndFocus();
       say('New round ready.');
     });
-
-    guessBtn.addEventListener('click', handleGuess);
 
     function handleGuess(){
       const raw = userGuess.value.trim();
@@ -247,12 +257,13 @@
       setText(attemptsVal, Math.max(remaining,0));
 
       if(val === secret){
-        pushHistory(val,'ok');
+        history.push({ value: val, relation: 'ok' });
+        renderHistory();
         say(`Correct: ${val}.`, 'good');
-        // Auto-new secret using same settings
+
+        // Auto-arm a new secret but keep UI minimal; history clears to keep fresh round clean
         secret = randInt(min, max);
         remaining = attempts;
-        lowerBound = min; upperBound = max;
         setText(rangeVal, `${min} – ${max}`);
         setText(attemptsVal, remaining);
         history = []; guessed = new Set();
@@ -262,11 +273,12 @@
       }
 
       if(remaining <= 0){
-        pushHistory(val, val < secret ? 'lo' : 'hi');
+        history.push({ value: val, relation: val < secret ? 'lo' : 'hi' });
+        renderHistory();
         say(`Out of attempts. It was ${secret}. New round armed.`, 'bad');
+
         secret = randInt(min, max);
         remaining = attempts;
-        lowerBound = min; upperBound = max;
         setText(rangeVal, `${min} – ${max}`);
         setText(attemptsVal, remaining);
         history = []; guessed = new Set();
@@ -275,19 +287,18 @@
         return;
       }
 
-      // mid-round feedback
-      const tooLow = val < secret;
-      pushHistory(val, tooLow ? 'lo' : 'hi');
-      say(`${tooLow ? 'Too low' : 'Too high'}. ${remaining} ${remaining===1?'try':'tries'} left.`, 'warn');
+      // Mid-round feedback
+      history.push({ value: val, relation: val < secret ? 'lo' : 'hi' });
+      renderHistory();
+      say(`${val < secret ? 'Too low' : 'Too high'}. ${remaining} ${remaining===1?'try':'tries'} left.`, 'warn');
       clearAndFocus();
     }
 
-    // Friendly defaults
+    // Friendly defaults (1–100, 8 attempts)
     window.addEventListener('DOMContentLoaded', ()=>{
       if(!minInput.value) minInput.value = 1;
       if(!maxInput.value) maxInput.value = 100;
-      if(!guessesInput.value) guessesInput.value = 7;
-      minInput.focus();
+      if(!guessesInput.value) guessesInput.value = 8;
     });
   </script>
 </body>
