@@ -160,12 +160,21 @@
     }
 
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+      /* Guess history */
+    .history { margin-top: 12px; }
+    .history h3 { margin: 4px 0 8px; font-size: 1rem; color: var(--muted); }
+    .history ol { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+    .history li { line-height: 1.3; }
+    .history .lo { color: var(--warning); }
+    .history .hi { color: var(--warning); }
+    .history .ok { color: var(--accent-2); }
+
   </style>
 </head>
 <body>
   <main class="wrap" role="main">
     <h1>Guessing Game</h1>
-    <p class="sub">Pick a range, set your attempts, then chase the mystery number. Bigger brain, smaller bragging rights.</p>
+    <p class="sub">Pick a range, set your attempts, then guess the number.</p>
 
     <!-- Setup form -->
     <form id="setup" aria-describedby="setup-help">
@@ -246,10 +255,13 @@
         <div class="pill" id="attempts-pill">Attempts left: <strong id="attempts-val"></strong></div>
         <div id="feedback" class="feedback" hidden></div>
       </div>
+          <div id="history" class="history" hidden>
+        <h3>Guess history</h3>
+        <ol id="history-list"></ol>
+      </div>
     </section>
 
     <div class="footer">
-      <span>Pro tip: tap the number box after every guess—focus snaps back there automatically.</span>
       <span id="version">v1.2</span>
     </div>
   </main>
@@ -278,12 +290,19 @@
     const rangeVal = $('#range-val');
     const attemptsVal = $('#attempts-val');
 
+    // Extra refs for history UI
+    const historyEl = document.querySelector('#history');
+    const historyList = document.querySelector('#history-list');
+
     // Game state
     let secret = null;
     let min = null;
     let max = null;
     let attempts = 0;
     let remaining = 0;
+    let lowerBound = null; // narrows after each guess
+    let upperBound = null;
+    let history = [];      // { value, relation }
 
     // Ensure mobile shows numeric keypad aggressively
     [minInput, maxInput, guessesInput, userGuess].forEach(el => {
@@ -336,6 +355,10 @@
       setText(rangeVal, `${min} – ${max}`);
       setText(attemptsVal, remaining);
 
+      lowerBound = min; upperBound = max;
+      history = [];
+      renderHistory();
+
       feedback.className = 'feedback';
       hide(feedback);
 
@@ -357,9 +380,13 @@
       }
       secret = randomInt(min, max);
       remaining = attempts;
+      lowerBound = min; upperBound = max;
+      setText(rangeVal, `${min} – ${max}`);
       setText(attemptsVal, remaining);
       feedback.className = 'feedback';
       hide(feedback);
+      history = [];
+      renderHistory();
       userGuess.value = '';
       guessBtn.disabled = true;
       focusGuess(true);
@@ -374,9 +401,56 @@
       const val = parseInt(raw, 10);
       if (Number.isNaN(val)) {
         toast('Numbers only in the guess box.', 'warn');
-        focusGuess(true);
+        postGuessCleanup();
         return;
       }
+      if (val < min || val > max) {
+        toast(`Stay in range: ${min} – ${max}.`, 'warn');
+        postGuessCleanup();
+        return;
+      }
+
+      remaining -= 1;
+      setText(attemptsVal, Math.max(remaining, 0));
+
+      if (val === secret) {
+        historyPush(val, 'ok');
+        say(`Bingo. ${val} is correct.`, 'good');
+        // Instantly start a new secret but keep the celebration
+        secret = randomInt(min, max);
+        remaining = attempts;
+        lowerBound = min; upperBound = max;
+        setText(rangeVal, `${min} – ${max}`);
+        setText(attemptsVal, remaining);
+        // Clear for next round
+        history = [];
+        renderHistory();
+        postGuessCleanup(true);
+        return;
+      }
+
+      if (remaining <= 0) {
+        const relation = val < secret ? 'lo' : 'hi';
+        historyPush(val, relation);
+        say(`Out of attempts. The number was ${secret}. New round armed—take another swing!`, 'bad');
+        // Auto new round
+        secret = randomInt(min, max);
+        remaining = attempts;
+        lowerBound = min; upperBound = max;
+        setText(rangeVal, `${min} – ${max}`);
+        setText(attemptsVal, remaining);
+        history = [];
+        renderHistory();
+        postGuessCleanup(true);
+        return;
+      }
+
+      const tooLow = val < secret;
+      const hint = tooLow ? 'Too low' : 'Too high';
+      historyPush(val, tooLow ? 'lo' : 'hi');
+      say(`${hint}. ${remaining} ${remaining===1?'try':'tries'} left.`, 'warn');
+      postGuessCleanup();
+    }
       if (val < min || val > max) {
         toast(`Stay in range: ${min} – ${max}.`, 'warn');
         focusGuess(true);
@@ -430,6 +504,36 @@
 
     function randomInt(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
 
+    function historyPush(value, relation) {
+      // relation: 'lo' (too low), 'hi' (too high), 'ok' (correct)
+      if (relation === 'lo') lowerBound = Math.max(lowerBound, value + 1);
+      if (relation === 'hi') upperBound = Math.min(upperBound, value - 1);
+      setText(rangeVal, `${lowerBound} – ${upperBound}`);
+      history.push({ value, relation });
+      renderHistory();
+    }
+
+    function renderHistory() {
+      historyList.innerHTML = '';
+      if (history.length === 0) {
+        historyEl.hidden = true;
+        return;
+      }
+      historyEl.hidden = false;
+      history.forEach((h, i) => {
+        const li = document.createElement('li');
+        li.className = h.relation;
+        li.textContent = `${i+1}. ${h.value} — ${h.relation === 'lo' ? 'too low' : h.relation === 'hi' ? 'too high' : 'correct'}`;
+        historyList.appendChild(li);
+      });
+    }
+
+    function postGuessCleanup(select = true) {
+      userGuess.value = '';
+      guessBtn.disabled = true;
+      focusGuess(select);
+    }
+
     function focusGuess(select = false) {
       // Always return focus to the guess input after each action
       userGuess.focus({ preventScroll: true });
@@ -447,7 +551,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       if (!minInput.value) minInput.value = 1;
       if (!maxInput.value) maxInput.value = 100;
-      if (!guessesInput.value) guessesInput.value = 8;
+      if (!guessesInput.value) guessesInput.value = 7;
       minInput.focus();
     });
   </script>
