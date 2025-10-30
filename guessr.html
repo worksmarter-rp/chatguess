@@ -7,9 +7,9 @@
   <link rel="manifest" href="manifest.json" />
   <style>
     :root {
-      --bg: #0b0c10; --panel: #151820; --text: #e8eef8; --muted: #a7b1c2;
-      --accent: #4f9cf9; --accent-2: #22c55e; --warning: #f59e0b; --danger: #ef4444;
-      --radius: 16px;
+      --bg:#0b0c10; --panel:#151820; --text:#e8eef8; --muted:#a7b1c2;
+      --accent:#4f9cf9; --accent-2:#22c55e; --warning:#f59e0b; --danger:#ef4444;
+      --radius:16px;
     }
     @media (prefers-color-scheme: light) {
       :root { --bg:#f7f8fb; --panel:#fff; --text:#0f172a; --muted:#4b5563; }
@@ -28,6 +28,7 @@
     h1{margin:0 0 8px;font-size:clamp(1.2rem,2.4vw,1.6rem)}
     p.sub{margin:0 0 10px;color:var(--muted);font-size:.95rem}
 
+    /* Controls */
     .grid{display:grid;gap:10px}
     @media(min-width:560px){.grid-3{grid-template-columns:repeat(3,1fr)} .grid-2{grid-template-columns:2fr 1fr}}
     label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:6px}
@@ -42,21 +43,33 @@
     .btn.secondary{background:transparent;border:1px solid rgba(148,163,184,.35);color:var(--text)}
     .btn:disabled{opacity:.55;cursor:not-allowed}
 
-    .status{margin-top:10px;display:grid;gap:8px}
-    .pill{display:flex;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(148,163,184,.12);color:var(--muted);width:fit-content}
-    .pill strong{color:var(--text)}
-    .feedback{padding:12px 14px;border-radius:12px;background:rgba(79,156,249,.1);border:1px solid rgba(79,156,249,.25)}
-    .feedback.warn{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.35)}
-    .feedback.bad{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.35)}
-    .feedback.good{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.35)}
+    /* Play grid under the input: left (feedback+status) | right (history) */
+    .playgrid{
+      display:grid; gap:10px; align-items:start; margin-top:10px;
+      grid-template-columns: minmax(140px,1fr) minmax(140px,1fr);
+    }
+    @media (max-width:360px){ .playgrid{ grid-template-columns: 1fr 1fr; } }
 
-    /* History: newest first + constrained height so it's above the keypad */
-    .history{margin-top:8px;max-height:32vh;overflow:auto}
-    .history h3{margin:4px 0 8px;font-size:1rem;color:var(--muted)}
-    .history ol{margin:0;padding-left:18px;display:grid;gap:4px}
-    .history li{line-height:1.3}
-    .history .lo,.history .hi{color:var(--warning)}
-    .history .ok{color:var(--accent-2)}
+    .feedback{
+      display:inline-block; max-width:65%; padding:8px 10px; border-radius:999px;
+      background:rgba(79,156,249,.1); border:1px solid rgba(79,156,249,.25);
+      font-size:.95rem;
+    }
+    .feedback.warn{ background:rgba(245,158,11,.12); border-color:rgba(245,158,11,.35) }
+    .feedback.bad { background:rgba(239,68,68,.12); border-color:rgba(239,68,68,.35) }
+    .feedback.good{ background:rgba(34,197,94,.12); border-color:rgba(34,197,94,.35) }
+
+    .status{display:grid;gap:8px;margin-top:6px}
+    .pill{display:flex;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(148,163,184,.12);color:var(--muted);width:fit-content}
+    .pill strong{color:var(--text)}
+
+    .history h3{margin:0 0 6px;font-size:1rem;color:var(--muted)}
+    .history-list{
+      margin:0; padding-left:16px; display:grid; gap:4px; max-height:32vh; overflow:auto;
+    }
+    .history-list li{line-height:1.3}
+    .history-list .lo,.history-list .hi{color:var(--warning)}
+    .history-list .ok{color:var(--accent-2)}
 
     /* Collapsible settings kept out of the way during play */
     details.settings { margin-bottom: 8px; }
@@ -105,29 +118,32 @@
       </div>
     </details>
 
-    <!-- Gameplay: minimal -->
+    <!-- Gameplay -->
     <section id="gameplay">
       <label class="sr-only" for="user-guess">Your Guess</label>
       <input id="user-guess" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="Enter a number" enterkeyhint="go" />
       <button id="guess" class="btn" type="button" disabled style="margin-top:8px">Guess</button>
 
-      <!-- Keep feedback small and close to the input -->
-      <div id="feedback" class="feedback" hidden style="margin-top:8px"></div>
+      <div class="playgrid">
+        <!-- Left: feedback + status -->
+        <div class="left">
+          <div id="feedback" class="feedback" hidden></div>
+          <div class="status" aria-live="polite" aria-atomic="true">
+            <div class="pill">Range: <strong id="range-val"></strong></div>
+            <div class="pill">Attempts left: <strong id="attempts-val"></strong></div>
+          </div>
+        </div>
 
-      <div class="status" aria-live="polite" aria-atomic="true">
-        <div class="pill">Range: <strong id="range-val"></strong></div>
-        <div class="pill">Attempts left: <strong id="attempts-val"></strong></div>
-      </div>
-
-      <!-- History sits close to input so it remains visible above the keypad -->
-      <div id="history" class="history" hidden>
-        <h3>Guess history</h3>
-        <ol id="history-list"></ol>
+        <!-- Right: history (newest first) -->
+        <aside class="right history" id="history" hidden>
+          <h3>Guess history</h3>
+          <ol id="history-list" class="history-list"></ol>
+        </aside>
       </div>
     </section>
   </main>
 
-  <div class="version">v1.3.3</div>
+  <div class="version">v1.3.4</div>
 
   <script>
     // ---- Element references ----
@@ -155,7 +171,6 @@
     let guessed = new Set();     // prevent duplicate guesses
 
     // ---- Helpers ----
-    const hide = (el) => el.hidden = true;
     const setText = (el, t) => el.textContent = t;
     const randInt = (a,b) => Math.floor(Math.random()*(b-a+1))+a;
 
@@ -173,25 +188,19 @@
       guessBtn.disabled = true;
       focusGuess(true);
     }
-
     function renderHistory(){
       historyList.innerHTML = '';
       if(history.length === 0){ historyEl.hidden = true; return; }
       historyEl.hidden = false;
-
-      // Newest first; display the correct guess number
+      // Newest first; NO numbering
       for(let i = history.length - 1; i >= 0; i--){
         const h = history[i];
         const li = document.createElement('li');
         li.className = h.relation; // 'lo' | 'hi' | 'ok'
-        const displayNum = i + 1;  // true chronological number
-        li.textContent = `${displayNum}. ${h.value} — ${h.relation==='lo'?'too low':h.relation==='hi'?'too high':'correct'}`;
+        li.textContent = `${h.value} — ${h.relation==='lo'?'too low':h.relation==='hi'?'too high':'correct'}`;
         historyList.appendChild(li);
       }
-
-      // Keep newest in view with soft nudge (works well with big keypads)
-      historyList.parentElement.scrollTop = 0;
-      historyEl.scrollIntoView({ block: 'nearest' });
+      historyList.parentElement.scrollTop = 0; // keep newest visible
     }
 
     // Prevent accidental wheel changes on number inputs
@@ -225,9 +234,8 @@
       feedback.hidden = true;
       renderHistory();
 
-      // Collapse settings to free space; keep gameplay visible
+      // Collapse settings to free space; show only play UI
       settings.open = false;
-
       clearAndFocus();
     });
 
@@ -289,10 +297,10 @@
         return;
       }
 
-      // Mid-round feedback
+      // Mid-round feedback (no tries text here—Attempts left pill already shows it)
       history.push({ value: val, relation: val < secret ? 'lo' : 'hi' });
       renderHistory();
-      say(`${val < secret ? 'Too low' : 'Too high'}. ${remaining} ${remaining===1?'try':'tries'} left.`, 'warn');
+      say(val < secret ? 'Too low.' : 'Too high.', 'warn');
       clearAndFocus();
     }
 
