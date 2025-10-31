@@ -65,7 +65,8 @@
 
     .history h3{margin:0 0 6px;font-size:1rem;color:var(--muted)}
     .history-list{
-      margin:0; padding-left:0px; list-style-type:none; display:grid; gap:4px; max-height:32vh; overflow:auto; 
+      margin:0; padding-left:0; list-style-type:none;
+      display:grid; gap:4px; max-height:32vh; overflow:auto;
     }
     .history-list li{line-height:1.3}
     .history-list .lo,.history-list .hi{color:var(--warning)}
@@ -169,6 +170,7 @@
     let attempts = 0, remaining = 0;
     let history = [];            // [{ value, relation }]
     let guessed = new Set();     // prevent duplicate guesses
+    let roundOver = false;       // freeze after win/lose until New Round
 
     // ---- Helpers ----
     const setText = (el, t) => el.textContent = t;
@@ -185,14 +187,14 @@
     }
     function clearAndFocus(){
       userGuess.value = '';
-      guessBtn.disabled = true;
+      guessBtn.disabled = true || roundOver;
       focusGuess(true);
     }
     function renderHistory(){
       historyList.innerHTML = '';
       if(history.length === 0){ historyEl.hidden = true; return; }
       historyEl.hidden = false;
-      // Newest first; NO numbering
+      // Newest first; no numbering
       for(let i = history.length - 1; i >= 0; i--){
         const h = history[i];
         const li = document.createElement('li');
@@ -200,7 +202,7 @@
         li.textContent = `${h.value} — ${h.relation==='lo'?'too low':h.relation==='hi'?'too high':'correct'}`;
         historyList.appendChild(li);
       }
-      historyList.parentElement.scrollTop = 0; // keep newest visible
+      historyList.parentElement.scrollTop = 0;
     }
 
     // Prevent accidental wheel changes on number inputs
@@ -209,8 +211,12 @@
     });
 
     // Guess button enablement and Enter-to-guess
-    userGuess.addEventListener('input', () => { guessBtn.disabled = userGuess.value.trim() === ''; });
-    userGuess.addEventListener('keydown', (e)=>{ if(e.key==='Enter' && !guessBtn.disabled){ e.preventDefault(); handleGuess(); } });
+    userGuess.addEventListener('input', () => {
+      guessBtn.disabled = userGuess.value.trim() === '' || roundOver;
+    });
+    userGuess.addEventListener('keydown', (e)=>{
+      if(e.key==='Enter' && !guessBtn.disabled){ e.preventDefault(); handleGuess(); }
+    });
     guessBtn.addEventListener('click', handleGuess);
 
     // ---- Start Game (no URL params; no form submit) ----
@@ -229,7 +235,8 @@
       secret = randInt(min, max);
 
       history = []; guessed = new Set();
-      setText(rangeVal, `${min} – ${max}`); // always static min–max
+      roundOver = false;
+      setText(rangeVal, `${min} – ${max}`); // static min–max
       setText(attemptsVal, remaining);
       feedback.hidden = true;
       renderHistory();
@@ -245,6 +252,7 @@
       secret = randInt(min, max);
       remaining = attempts;
       history = []; guessed = new Set();
+      roundOver = false;
       setText(rangeVal, `${min} – ${max}`);
       setText(attemptsVal, remaining);
       feedback.hidden = true;
@@ -255,6 +263,8 @@
     });
 
     function handleGuess(){
+      if(roundOver){ say('Round over. Tap “New Round” to play again.', 'warn'); return; }
+
       const raw = userGuess.value.trim();
       if(raw==='') return;
       const val = parseInt(raw,10);
@@ -269,15 +279,8 @@
       if(val === secret){
         history.push({ value: val, relation: 'ok' });
         renderHistory();
-        say(`Correct: ${val}.`, 'good');
-
-        // Auto-arm a new secret
-        secret = randInt(min, max);
-        remaining = attempts;
-        setText(rangeVal, `${min} – ${max}`);
-        setText(attemptsVal, remaining);
-        history = []; guessed = new Set();
-        renderHistory();
+        say(`Correct: ${val}. Round complete.`, 'good');
+        roundOver = true;
         clearAndFocus();
         return;
       }
@@ -285,14 +288,8 @@
       if(remaining <= 0){
         history.push({ value: val, relation: val < secret ? 'lo' : 'hi' });
         renderHistory();
-        say(`Out of attempts. It was ${secret}. New round armed.`, 'bad');
-
-        secret = randInt(min, max);
-        remaining = attempts;
-        setText(rangeVal, `${min} – ${max}`);
-        setText(attemptsVal, remaining);
-        history = []; guessed = new Set();
-        renderHistory();
+        say(`Out of attempts. It was ${secret}. Round complete.`, 'bad');
+        roundOver = true;
         clearAndFocus();
         return;
       }
@@ -308,7 +305,7 @@
     window.addEventListener('DOMContentLoaded', ()=>{
       if(!minInput.value) minInput.value = 1;
       if(!maxInput.value) maxInput.value = 100;
-      if(!guessesInput.value) guessesInput.value = 8;
+      if(!guessesInput.value) minInput.value !== '' || maxInput.value !== '' ? guessesInput.value = 8 : guessesInput.value = 8;
     });
   </script>
 </body>
