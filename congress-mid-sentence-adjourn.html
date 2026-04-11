@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>House Adjourns Itself Before Congressman Can Finish Sentence, Sets New Land Speed Record | Govment.org</title>
+  <meta name="description" content="In a historic display of procedural efficiency, the U.S. House of Representatives adjourned a pro forma session Thursday before Rep. Glenn Ivey could complete his opening remarks, possibly even a full word." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink: #1a1008;
+      --paper: #f5f0e8;
+      --aged: #e8e0cc;
+      --red: #c0392b;
+      --gold: #8b6914;
+      --mid: #5a4a2a;
+      --light: #9a8c72;
+      --rule: #c8b898;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    /* ── SITE HEADER ── */
+    .site-header {
+      background: var(--ink);
+      color: var(--paper);
+      text-align: center;
+      padding: 28px 24px 20px;
+      border-bottom: 4px solid var(--red);
+      position: relative;
+      overflow: hidden;
+    }
+    .site-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(255,255,255,0.015) 3px,
+        rgba(255,255,255,0.015) 4px
+      );
+      pointer-events: none;
+    }
+    .site-flag {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 8vw, 72px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .site-flag span { color: var(--red); }
+    .site-tagline {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--light);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .site-nav {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .site-nav a {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--rule);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .site-nav a:hover { color: #fff; }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--red);
+      color: #fff;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      padding: 6px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-inner {
+      display: inline-block;
+      animation: scroll-ticker 45s linear infinite;
+    }
+    .ticker-inner span { margin: 0 40px; }
+    @keyframes scroll-ticker {
+      from { transform: translateX(100vw); }
+      to { transform: translateX(-100%); }
+    }
+
+    /* ── ARTICLE WRAPPER ── */
+    .article-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── CATEGORY + KICKER ── */
+    .kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .kicker::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    /* ── HEADLINE ── */
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    /* ── DECK ── */
+    .deck {
+      font-family: 'Source Serif 4', serif;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--mid);
+      border-left: 3px solid var(--red);
+      padding-left: 16px;
+      margin-bottom: 24px;
+    }
+
+    /* ── BYLINE BAR ── */
+    .byline-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 36px;
+    }
+    .byline {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--mid);
+      letter-spacing: 1px;
+    }
+    .byline strong { color: var(--gold); }
+    .datestamp {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--light);
+      letter-spacing: 2px;
+    }
+
+    /* ── GAVEL BOX ── */
+    .gavel-box {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 28px 32px;
+      margin: 36px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .gavel-box::before {
+      content: '🔨';
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 64px;
+      opacity: 0.12;
+    }
+    .gavel-box .gavel-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .gavel-box .gavel-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-style: italic;
+      line-height: 1.4;
+      color: #fff;
+    }
+    .gavel-box .gavel-attr {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--light);
+      letter-spacing: 2px;
+      margin-top: 10px;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      margin: 36px 0;
+      border-left: 3px solid var(--rule);
+      padding-left: 24px;
+    }
+    .timeline-item {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -31px;
+      top: 6px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--red);
+      border: 2px solid var(--paper);
+    }
+    .timeline-time {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .timeline-event {
+      font-size: 16px;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    /* ── BODY COPY ── */
+    .article-body p {
+      margin-bottom: 24px;
+      color: var(--ink);
+    }
+    .article-body p:first-child::first-letter {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 900;
+      float: left;
+      line-height: 0.75;
+      margin: 8px 8px 0 0;
+      color: var(--red);
+    }
+
+    /* ── PULL QUOTE ── */
+    blockquote {
+      margin: 36px 0;
+      padding: 0 0 0 24px;
+      border-left: 4px solid var(--gold);
+    }
+    blockquote p {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--mid);
+      line-height: 1.5;
+      margin: 0 0 8px !important;
+    }
+    blockquote cite {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--light);
+      text-transform: uppercase;
+      font-style: normal;
+    }
+
+    /* ── SOURCE LINK ── */
+    .source-box {
+      background: var(--aged);
+      border: 1px solid var(--rule);
+      padding: 16px 20px;
+      margin: 36px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .source-box .source-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .source-box .source-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--light);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .source-box .source-title {
+      font-family: 'Source Serif 4', serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+    .source-box a {
+      color: var(--red);
+      text-decoration: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 1px;
+      display: inline-block;
+      margin-top: 6px;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1px;
+      transition: color 0.2s;
+    }
+    .source-box a:hover { color: var(--gold); }
+
+    /* ── DISCLAIMER ── */
+    .disclaimer {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 2px solid var(--rule);
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--light);
+      letter-spacing: 1px;
+      line-height: 1.8;
+    }
+
+    /* ── TAGS ── */
+    .tags {
+      margin-top: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid var(--rule);
+      color: var(--mid);
+    }
+
+    /* ── RELATED ── */
+    .related {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 3px double var(--rule);
+    }
+    .related-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--light);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .related-item {
+      border-top: 2px solid var(--rule);
+      padding-top: 12px;
+    }
+    .related-item a {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+      line-height: 1.3;
+      display: block;
+      transition: color 0.2s;
+    }
+    .related-item a:hover { color: var(--red); }
+    .related-item .r-cat {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* ── SITE FOOTER ── */
+    .site-footer {
+      background: var(--ink);
+      color: var(--light);
+      text-align: center;
+      padding: 32px 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      line-height: 2;
+    }
+    .site-footer a { color: var(--rule); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .deck { font-size: 17px; }
+      .gavel-box .gavel-quote { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SITE HEADER -->
+<header class="site-header">
+  <div class="site-flag">GOV<span>MENT</span>.ORG</div>
+  <div class="site-tagline">Your Source for Unconventional Truths Since the Beginning of the End</div>
+  <nav class="site-nav">
+    <a href="/">Home</a>
+    <a href="#">Executive Branch</a>
+    <a href="#">Fiscal Mysteries</a>
+    <a href="#">War &amp; Stuff</a>
+    <a href="#">Job Postings</a>
+    <a href="#">About</a>
+  </nav>
+</header>
+
+<!-- BREAKING NEWS TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>⚡ BREAKING: House adjourns before anyone can speak</span>
+    <span>⚡ UPDATE: Gavel confirmed operational, democracy less so</span>
+    <span>⚡ DEVELOPING: Congress on recess, war continues unaffected</span>
+    <span>⚡ EXCLUSIVE: DHS confirms $1 billion in warehouses are warehouses</span>
+    <span>⚡ REPORT: Iran responds to U.S. foreign policy with memes</span>
+    <span>⚡ ALERT: Legislature legislates nothing, on schedule</span>
+  </div>
+</div>
+
+<!-- ARTICLE -->
+<main class="article-wrap">
+
+  <div class="kicker">Legislative Achievement</div>
+
+  <h1>House Adjourns Itself Before Congressman Can Finish Sentence, Sets New Land Speed Record</h1>
+
+  <p class="deck">In a display of procedural athleticism not seen since the last time someone tried to say something, the U.S. House gaveled out Thursday before Rep. Glenn Ivey could complete his opening remarks, possibly even a full word.</p>
+
+  <div class="byline-bar">
+    <div class="byline">By <strong>Staff Reporter, Bureau of Unfinished Business</strong></div>
+    <div class="datestamp">APRIL 10, 2026 &nbsp;·&nbsp; GOVMENT.ORG</div>
+  </div>
+
+  <div class="article-body">
+
+    <p>WASHINGTON, D.C. — The United States House of Representatives convened a pro forma session Thursday morning and adjourned it with such velocity that at least one congressman was left blinking on the House floor, mouth open, mid-breath, holding a resolution he had prepared, printed, and carried to the Capitol during what is technically a two-week Easter recess. The session lasted approximately as long as it takes to say "the House stands adjourned," which is exactly what was said, immediately, by Rep. Chris Smith of New Jersey, who wielded the gavel with the confidence of a man who had somewhere better to be.</p>
+
+    <div class="gavel-box">
+      <div class="gavel-label">Official Record — Full Transcript of Proceedings</div>
+      <div class="gavel-quote">"Pursuant to clause 13 of rule 1, the House stands adjourned until 2:30 p.m. on Monday, April 13th, 2026."</div>
+      <div class="gavel-attr">— Rep. Chris Smith (R-NJ), in their entirety, the complete proceedings of the United States House of Representatives, April 9, 2026</div>
+    </div>
+
+    <p>Rep. Glenn Ivey, a Democrat from Maryland, had arrived at the Capitol with colleagues, a resolution, and what witnesses describe as "a whole prepared thing he was going to say." The resolution — aimed at limiting President Trump's authority to continue military operations against Iran — was never introduced, never debated, and never voted upon, on account of the House having immediately ceased to exist as a functioning body approximately four seconds after it began to exist as one.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-time">9:01 AM</div>
+        <div class="timeline-event">House pro forma session convenes. Prayer offered. Pledge recited.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">9:02 AM</div>
+        <div class="timeline-event">Rep. Chris Smith gavels the session closed. Rep. Glenn Ivey opens his mouth.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">9:02 AM</div>
+        <div class="timeline-event">Session has ended. Rep. Ivey's mouth remains open.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-time">9:03 AM</div>
+        <div class="timeline-event">Democrats relocate to the Capitol steps. War continues.</div>
+      </div>
+      <div class="timeline-time" style="font-size:10px; color: var(--light); margin-top: 8px;">Congress not expected to reconvene until April 13 · War still ongoing at time of publication</div>
+    </div>
+
+    <p>Procedural experts at the nonpartisan Congressional Research Institute for Things That Technically Happen confirmed that a presiding officer during a pro forma session is under no obligation to recognize other members seeking to speak, call on anyone who has raised their hand, or acknowledge that other human beings are physically present in the room. "The rules allow for this," said one expert, who asked not to be named because they have accepted the situation. "Have they always allowed for this? Yes. Has it always felt like this? No."</p>
+
+    <blockquote>
+      <p>"We showed up on the House floor today to do our job and defend Congress's constitutional war powers. Republicans refused to even recognize our resolution."</p>
+      <cite>— Rep. Don Beyer (D-VA), on the Capitol steps, approximately ninety seconds after the House adjourned itself</cite>
+    </blockquote>
+
+    <p>The resolution Ivey attempted to introduce would have required the President to obtain congressional authorization before continuing military operations in Iran — a request that, under the U.S. Constitution, Congress technically already has the authority to make at any time, a fact that has not meaningfully affected the situation. Democrats have now attempted this or a similar resolution multiple times, each effort meeting a fate best described as "also this."</p>
+
+    <p>House Minority Leader Hakeem Jeffries had urged Speaker Mike Johnson to reconvene Congress immediately to hold a proper vote. Johnson did not reconvene Congress. The House remains on its two-week Easter recess, during which a war is ongoing, a ceasefire is fragile, and at least one congressman is still standing on the Capitol steps holding a piece of paper that has not been read aloud.</p>
+
+    <p>Rep. James Walkinshaw of Virginia was heard shouting "End the war, let us vote" in the chamber as the session concluded, making him technically the most productive member of the House on Thursday, having said two complete sentences before the building closed around him. No official response was issued to his remarks, as there was no longer an official body present to issue one.</p>
+
+    <p>At press time, the gavel had been secured in its traditional location. Rep. Ivey's resolution remained unread. Monday was still April 13th.</p>
+
+  </div><!-- /.article-body -->
+
+  <!-- SOURCE BOX -->
+  <div class="source-box">
+    <div class="source-icon">📰</div>
+    <div>
+      <div class="source-label">Read the Actual Story — NBC News</div>
+      <div class="source-title">Republicans block effort to halt Trump's war with Iran after 'civilization' threat</div>
+      <a href="https://www.nbcnews.com/politics/congress/republicans-block-effort-halt-trumps-war-iran-civilization-threat-rcna267345" target="_blank" rel="noopener noreferrer">Read the full report at NBCNews.com →</a>
+    </div>
+  </div>
+
+  <div class="tags">
+    <span class="tag">Congress</span>
+    <span class="tag">War Powers</span>
+    <span class="tag">Iran</span>
+    <span class="tag">Pro Forma</span>
+    <span class="tag">Legislative Achievement</span>
+    <span class="tag">Gavel</span>
+    <span class="tag">Things Left Unsaid</span>
+  </div>
+
+  <div class="disclaimer">
+    DISCLAIMER: Govment.org is a satirical publication. All articles are works of fiction and parody.<br>
+    The gavel, the recess, the open mouth, and the unread resolution are all real. We did not make up the gavel.
+  </div>
+
+  <!-- RELATED -->
+  <div class="related">
+    <div class="related-label">More From Govment.org</div>
+    <div class="related-grid">
+      <div class="related-item">
+        <div class="r-cat">Fiscal Mysteries</div>
+        <a href="/dhs-warehouses-billion.html">DHS Confirms $1 Billion Worth of Warehouses Are, In Fact, Warehouses</a>
+      </div>
+      <div class="related-item">
+        <div class="r-cat">Executive Branch</div>
+        <a href="/president-job-posting.html">Job Posting: President of the United States — See If You Qualify</a>
+      </div>
+      <div class="related-item">
+        <div class="r-cat">Science &amp; Policy</div>
+        <a href="/sacrifices-to-sungods-and-global-warming.html">Experts Explore Link Between Sun God Sacrifices and Global Warming</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div style="font-size:22px; font-family:'Playfair Display',serif; color:#fff; margin-bottom:8px;">GOVMENT.ORG</div>
+  <div>Unveiling the Truth Since Someone Had to · <a href="/">Home</a> · <a href="#">Archive</a> · <a href="#">Contact the Bureau</a></div>
+  <div style="margin-top:12px; color:#3a3020;">© 2026 Govment.org · Satire · All facts approximate · Not liable for democracy</div>
+</footer>
+
+</body>
+</html>
