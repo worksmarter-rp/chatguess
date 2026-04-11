@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Govment.org \u2014 Unveiling the Truth</title>
+  <title>Govment.org — Unveiling the Truth</title>
   <meta name="description" content="Govment.org: Satirical takes on government, politics, and the peculiarities of power. Spoken best with a thick Floridian accent." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -33,9 +33,9 @@
 
     a { color: inherit; text-decoration: none; }
 
-    /* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    /* ─────────────────────────────
        SITE HEADER
-    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+    ───────────────────────────── */
     .site-header {
       background: var(--ink);
       color: var(--paper);
@@ -98,9 +98,9 @@
     }
     .site-nav a:hover { color: #fff; }
 
-    /* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    /* ─────────────────────────────
        TICKER
-    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+    ───────────────────────────── */
     .ticker {
       background: var(--red);
       color: #fff;
@@ -115,15 +115,22 @@
       display: inline-block;
       animation: scroll-ticker 50s linear infinite;
     }
-    .ticker-inner span { margin: 0 48px; }
+    .ticker-inner a {
+      margin: 0 48px;
+      color: #fff;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .ticker-inner a:hover { color: #ffcccc; text-decoration: underline; }
     @keyframes scroll-ticker {
       from { transform: translateX(100vw); }
       to   { transform: translateX(-100%); }
     }
 
-    /* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    /* ─────────────────────────────
        DATE BANNER
-    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+    ───────────────────────────── */
     .date-banner {
       display: flex;
       align-items: center;
@@ -146,18 +153,18 @@
       text-transform: uppercase;
     }
 
-    /* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    /* ─────────────────────────────
        LAYOUT WRAPPER
-    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+    ───────────────────────────── */
     .page-wrap {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
     }
 
-    /* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    /* ─────────────────────────────
        HERO / LEAD STORY
-    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+    ───────────────────────────── */
     .hero {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -262,11 +269,11 @@
       transition: gap 0.2s;
     }
     .read-more:hover { gap: 12px; }
-    .read-more::after { content: '\u2192'; }
+    .read-more::after { content: '→'; }
 
-    /* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    /* ─────────────────────────────
        THREE-COLUMN SECTION RULE
-    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+    ───────────────────────────── */
     .section-rule {
       display: flex;
       align-items: center;
@@ -289,9 +296,9 @@
       background: var(--rule);
     }
 
-    /* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    /* ─────────────────────────────
        ARTICLE GRID
-    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+    ───────────────────────────── */
     .article-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -377,9 +384,9 @@
       margin-top: auto;
     }
 
-    /* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    /* ─────────────────────────────
        TWO-COLUMN LOWER
-    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+    ───────────────────────────── */
     .lower-grid {
       display: grid;
       grid-template-columns: 2fr 1fr;
@@ -512,9 +519,9 @@
       margin-top: 4px;
     }
 
-    /* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    /* ─────────────────────────────
        SITE FOOTER
-    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+    ───────────────────────────── */
     .site-footer {
       background: var(--ink);
       color: var(--light);
@@ -575,9 +582,9 @@
       color: #2a2010;
     }
 
-    /* \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    /* ─────────────────────────────
        RESPONSIVE
-    \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 */
+    ───────────────────────────── */
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; }
       .hero-content { border-left: none; border-top: 1px solid var(--rule); }
@@ -594,7 +601,7 @@
 </head>
 <body>
 
-<!-- \u2550\u2550\u2550 SITE HEADER \u2550\u2550\u2550 -->
+<!-- ═══ SITE HEADER ═══ -->
 <header class="site-header">
   <div class="site-flag">GOV<span>MENT</span>.ORG</div>
   <div class="site-tagline">Unveiling the Truth Since Someone Had To</div>
@@ -610,24 +617,75 @@
   </nav>
 </header>
 
-<!-- \u2550\u2550\u2550 TICKER \u2550\u2550\u2550 -->
+<!-- ═══ TICKER ═══ -->
 <div class="ticker">
   <div class="ticker-inner">
-    <span>\u26a1 BREAKING: House gavels out before anyone can speak \u00b7 Session lasts approximately one sentence</span>
-    <span>\u26a1 UPDATE: DHS confirms billion-dollar warehouses are warehouses \u00b7 Additional warehouses being warehoused</span>
-    <span>\u26a1 DEVELOPING: Congress on Easter recess \u00b7 War continues on its own schedule</span>
-    <span>\u26a1 REPORT: Iran now weaponizing memes \u00b7 Pentagon requests meme budget</span>
-    <span>\u26a1 EXCLUSIVE: CDC blocks positive vaccine data \u00b7 Officials cite too many good numbers</span>
-    <span>\u26a1 REMINDER: Democracy technically still in effect \u00b7 Officials checking</span>
+    <a href="/congress-mid-sentence-adjourn.html">⚡ BREAKING: House gavels out before anyone can speak &nbsp;&middot;&nbsp; Session lasts approximately one sentence</a>
+    <a href="/dhs-warehouses-billion.html">⚡ UPDATE: DHS confirms $1 billion in warehouses are warehouses &nbsp;&middot;&nbsp; Additional warehouses being warehoused</a>
+    <a href="/congress-mid-sentence-adjourn.html">⚡ DEVELOPING: Congress on Easter recess &nbsp;&middot;&nbsp; War continues on its own schedule</a>
+    <a href="/sacrifices-to-sungods-and-global-warming.html">⚡ ARCHIVE: Experts explore link between sun god sacrifices and global warming &nbsp;&middot;&nbsp; Sun unavailable for comment</a>
+    <a href="/president-job-posting.html">⚡ NOW HIRING: President of the United States &nbsp;&middot;&nbsp; Benefits include Air Force One and full nuclear authority</a>
+    <a href="/dhs-warehouses-billion.html">⚡ REMINDER: Democracy technically still in effect &nbsp;&middot;&nbsp; Officials checking &nbsp;&middot;&nbsp; Warehouses also still in effect</a>
   </div>
 </div>
 
-<!-- \u2550\u2550\u2550 DATE BANNER \u2550\u2550\u2550 -->
+<!-- ═══ DATE BANNER ═══ -->
 <div class="date-banner">
   <span class="dt">SATURDAY, APRIL 11, 2026</span>
-  <span class="edition">Vol. I &nbsp;\u00b7&nbsp; Issue 3 &nbsp;\u00b7&nbsp; The Govment Gazette</span>
+  <span class="edition">Vol. I &nbsp;·&nbsp; Issue 3 &nbsp;·&nbsp; The Govment Gazette</span>
 </div>
 
 <div class="page-wrap">
 
-  <!-- \u2550\u2550\u2550 HERO \u2014 LEAD STORY \u2550\u2550\u2550 
+  <!-- ═══ HERO — LEAD STORY ═══ -->
+  <div class="hero">
+    <div class="hero-image">
+      <!-- Replace src with generated image: hero-congress-gavel.jpg -->
+      <div class="img-placeholder">
+        <div class="img-icon">🔨</div>
+        <div class="img-label">Image Prompt Below</div>
+        <div class="img-prompt">hero-congress-gavel.jpg<br>See image brief</div>
+      </div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-kicker">Legislative Achievement · April 9, 2026</div>
+      <h2><a href="/congress-mid-sentence-adjourn.html">House Adjourns Itself Before Congressman Can Finish Sentence, Sets New Land Speed Record</a></h2>
+      <p class="hero-deck">In a display of procedural athleticism not seen since the last time someone tried to say something, the U.S. House gaveled out Thursday before Rep. Glenn Ivey could complete his opening remarks — possibly even a full word.</p>
+      <a class="read-more" href="/congress-mid-sentence-adjourn.html">Read Full Article</a>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION RULE ═══ -->
+  <div class="section-rule"><span class="rule-label">Latest Dispatches</span></div>
+
+  <!-- ═══ THREE-COLUMN GRID ═══ -->
+  <div class="article-grid">
+
+    <!-- Card 1: Warehouses -->
+    <div class="grid-card">
+      <div class="grid-card-image">
+        <!-- Replace src with generated image: warehouse-billion.jpg -->
+        <div class="img-placeholder-sm">
+          <div class="img-icon">🏭</div>
+          <div class="img-label">warehouse-billion.jpg<br>See image brief</div>
+        </div>
+      </div>
+      <div class="card-cat">Fiscal Mysteries</div>
+      <h3><a href="/dhs-warehouses-billion.html">DHS Confirms $1 Billion Worth of Warehouses Are, In Fact, Warehouses</a></h3>
+      <p class="card-excerpt">After a thorough review, the Department of Homeland Security has verified that eleven large, empty buildings are large, empty buildings. Officials are proud of the loading docks.</p>
+      <div class="card-meta">
+        <span>APR 10, 2026</span>
+        <a href="/dhs-warehouses-billion.html" style="color:var(--red); letter-spacing:2px;">Read →</a>
+      </div>
+    </div>
+
+    <!-- Card 2: Sun Gods -->
+    <div class="grid-card">
+      <div class="grid-card-image">
+        <!-- Replace src with generated image: sungod-warming.jpg -->
+        <div class="img-placeholder-sm">
+          <div class="img-icon">☀️</div>
+          <div class="img-label">sungod-warming.jpg<br>See image brief</div>
+        </div>
+      </div>
+      <div cl
