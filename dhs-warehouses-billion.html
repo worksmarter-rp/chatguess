@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DHS Confirms $1 Billion in Warehouses Are, In Fact, Warehouses | Govment.org</title>
+  <meta name="description" content="The Department of Homeland Security today confirmed that eleven warehouses purchased at a cost exceeding $1 billion are, upon inspection, warehouses." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink: #1a1008;
+      --paper: #f5f0e8;
+      --aged: #e8e0cc;
+      --red: #c0392b;
+      --gold: #8b6914;
+      --mid: #5a4a2a;
+      --light: #9a8c72;
+      --rule: #c8b898;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    /* ── SITE HEADER ── */
+    .site-header {
+      background: var(--ink);
+      color: var(--paper);
+      text-align: center;
+      padding: 28px 24px 20px;
+      border-bottom: 4px solid var(--red);
+      position: relative;
+      overflow: hidden;
+    }
+    .site-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(255,255,255,0.015) 3px,
+        rgba(255,255,255,0.015) 4px
+      );
+      pointer-events: none;
+    }
+    .site-flag {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 8vw, 72px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .site-flag span { color: var(--red); }
+    .site-tagline {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--light);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .site-nav {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .site-nav a {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--rule);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .site-nav a:hover { color: #fff; }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--red);
+      color: #fff;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      padding: 6px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-inner {
+      display: inline-block;
+      animation: scroll-ticker 40s linear infinite;
+    }
+    .ticker-inner span { margin: 0 40px; }
+    @keyframes scroll-ticker {
+      from { transform: translateX(100vw); }
+      to { transform: translateX(-100%); }
+    }
+
+    /* ── ARTICLE WRAPPER ── */
+    .article-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── CATEGORY + KICKER ── */
+    .kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .kicker::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    /* ── HEADLINE ── */
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    /* ── DECK ── */
+    .deck {
+      font-family: 'Source Serif 4', serif;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--mid);
+      border-left: 3px solid var(--red);
+      padding-left: 16px;
+      margin-bottom: 24px;
+    }
+
+    /* ── BYLINE BAR ── */
+    .byline-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 36px;
+    }
+    .byline {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--mid);
+      letter-spacing: 1px;
+    }
+    .byline strong { color: var(--gold); }
+    .datestamp {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--light);
+      letter-spacing: 2px;
+    }
+
+    /* ── PULL STAT ── */
+    .pull-stat {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 24px 28px;
+      margin: 36px 0;
+      position: relative;
+    }
+    .pull-stat::before {
+      content: '$';
+      position: absolute;
+      top: -20px;
+      left: 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 80px;
+      color: var(--red);
+      line-height: 1;
+      opacity: 0.4;
+    }
+    .pull-stat .number {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--red);
+      line-height: 1;
+    }
+    .pull-stat .label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--light);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ── BODY COPY ── */
+    .article-body p {
+      margin-bottom: 24px;
+      color: var(--ink);
+    }
+    .article-body p:first-child::first-letter {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 900;
+      float: left;
+      line-height: 0.75;
+      margin: 8px 8px 0 0;
+      color: var(--red);
+    }
+
+    /* ── PULL QUOTE ── */
+    blockquote {
+      margin: 36px 0;
+      padding: 0 0 0 24px;
+      border-left: 4px solid var(--gold);
+    }
+    blockquote p {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--mid);
+      line-height: 1.5;
+      margin: 0 0 8px !important;
+    }
+    blockquote cite {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--light);
+      text-transform: uppercase;
+      font-style: normal;
+    }
+
+    /* ── DISCLAIMER ── */
+    .disclaimer {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 2px solid var(--rule);
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--light);
+      letter-spacing: 1px;
+      line-height: 1.8;
+    }
+
+    /* ── TAGS ── */
+    .tags {
+      margin-top: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid var(--rule);
+      color: var(--mid);
+    }
+
+    /* ── RELATED ── */
+    .related {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 3px double var(--rule);
+    }
+    .related-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--light);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .related-item {
+      border-top: 2px solid var(--rule);
+      padding-top: 12px;
+    }
+    .related-item a {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+      line-height: 1.3;
+      display: block;
+      transition: color 0.2s;
+    }
+    .related-item a:hover { color: var(--red); }
+    .related-item .r-cat {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* ── SITE FOOTER ── */
+    .site-footer {
+      background: var(--ink);
+      color: var(--light);
+      text-align: center;
+      padding: 32px 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      line-height: 2;
+    }
+    .site-footer a { color: var(--rule); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .pull-stat .number { font-size: 36px; }
+      .deck { font-size: 17px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SITE HEADER -->
+<header class="site-header">
+  <div class="site-flag">GOV<span>MENT</span>.ORG</div>
+  <div class="site-tagline">Your Source for Unconventional Truths Since the Beginning of the End</div>
+  <nav class="site-nav">
+    <a href="/">Home</a>
+    <a href="#">Executive Branch</a>
+    <a href="#">Fiscal Mysteries</a>
+    <a href="#">War &amp; Stuff</a>
+    <a href="#">Job Postings</a>
+    <a href="#">About</a>
+  </nav>
+</header>
+
+<!-- BREAKING NEWS TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>⚡ BREAKING: Government confirms it spent money</span>
+    <span>⚡ SOURCES: Warehouses still not doing anything</span>
+    <span>⚡ UPDATE: Congress adjourns before anyone can speak</span>
+    <span>⚡ DEVELOPING: Iran responds to U.S. policy with memes</span>
+    <span>⚡ EXCLUSIVE: CDC blocks study showing something good happened</span>
+    <span>⚡ REPORT: Democracy still technically in effect, officials checking</span>
+  </div>
+</div>
+
+<!-- ARTICLE -->
+<main class="article-wrap">
+
+  <div class="kicker">Fiscal Responsibility</div>
+
+  <h1>DHS Confirms $1 Billion Worth of Warehouses Are, In Fact, Warehouses</h1>
+
+  <p class="deck">After a thorough review, the Department of Homeland Security has verified that eleven large, empty buildings it purchased to house immigrants are large, empty buildings.</p>
+
+  <div class="byline-bar">
+    <div class="byline">By <strong>Staff Reporter, Bureau of Things That Exist</strong></div>
+    <div class="datestamp">APRIL 10, 2026 &nbsp;·&nbsp; GOVMENT.ORG</div>
+  </div>
+
+  <div class="article-body">
+
+    <p>WASHINGTON, D.C. — The Department of Homeland Security moved to reassure a skeptical public Thursday, confirming that eleven warehouses purchased at a combined cost of more than $1 billion are, upon physical inspection, warehouses. Critics who suggested the buildings might be something other than warehouses were told to look at the buildings, which are warehouses.</p>
+
+    <div class="pull-stat">
+      <div class="number">$1,000,000,000</div>
+      <div class="label">Approximate cost of warehouses that are warehouses · Source: DHS, probably</div>
+    </div>
+
+    <p>"We want to be very clear," said a spokesperson for the agency, reading from a prepared statement in front of one of the warehouses. "These are warehouses. They have walls. They have roofs. Several of them have loading docks." The spokesperson paused to consult additional notes. "We are proud of the loading docks."</p>
+
+    <p>The eleven facilities, spread across multiple states, were acquired as part of a sweeping initiative to dramatically expand the government's capacity to detain immigrants. The plan called for rapid conversion of the warehouse spaces into functional detention centers. As of press time, this conversion has not begun. Officials say the warehouses remain in a preparatory phase best described as "being warehouses."</p>
+
+    <blockquote>
+      <p>"The important thing is we have the warehouses. What goes inside them is really a second-step conversation."</p>
+      <cite>— Senior DHS Official, who asked not to be identified because they are standing in an empty warehouse</cite>
+    </blockquote>
+
+    <p>Procurement records reviewed by Govment.org show that the agency began the warehouse acquisition process in 2024 following internal projections that detention capacity would need to expand significantly. The records do not show any subsequent projections regarding what to do with warehouses once purchased. A follow-up memo titled "Phase Two: The Warehouse Phase" remains classified.</p>
+
+    <p>Congressional oversight has been limited. A spokesperson for the House Appropriations Committee confirmed that members were "aware that warehouses cost money" and indicated that a hearing on the matter could be scheduled "once everyone gets back from recess, probably." Senate leadership did not respond to requests for comment, as the Senate was also on recess, as it frequently is.</p>
+
+    <p>Community advocates near several of the facilities expressed concern not about the warehouses' existence, but about the vagueness of their purpose. "No one will tell us what's going in there," said one resident near a 200,000-square-foot facility in an undisclosed location. "We asked. They said 'stuff.' We asked what kind of stuff. They said 'government stuff.' That was the whole meeting."</p>
+
+    <p>DHS officials emphasized that the warehouses represent a significant investment in America's future readiness to have places to put things, and noted that all eleven structures have passed basic building inspections. "These are not theoretical warehouses," a second spokesperson clarified at a follow-up briefing held inside a warehouse. "You can touch them. We encourage the public to look at them from the outside." Reporters who asked to go inside were told the inside was "still being warehoused."</p>
+
+    <p>At publication time, DHS had issued a supplementary statement confirming that the warehouses also have floors.</p>
+
+  </div><!-- /.article-body -->
+
+  <div class="tags">
+    <span class="tag">DHS</span>
+    <span class="tag">Fiscal Responsibility</span>
+    <span class="tag">Warehouses</span>
+    <span class="tag">Government Spending</span>
+    <span class="tag">Things That Exist</span>
+    <span class="tag">Phase Two</span>
+  </div>
+
+  <div class="disclaimer">
+    DISCLAIMER: Govment.org is a satirical publication. All articles are works of fiction and parody. Any resemblance to actual government waste is purely because it is.<br>
+    The warehouses are real. We did not make up the warehouses.
+  </div>
+
+  <!-- RELATED -->
+  <div class="related">
+    <div class="related-label">More From Govment.org</div>
+    <div class="related-grid">
+      <div class="related-item">
+        <div class="r-cat">Executive Branch</div>
+        <a href="/president-job-posting.html">Job Posting: President of the United States — See If You Qualify</a>
+      </div>
+      <div class="related-item">
+        <div class="r-cat">Science &amp; Policy</div>
+        <a href="/sacrifices-to-sungods-and-global-warming.html">Experts Explore Link Between Sun God Sacrifices and Global Warming</a>
+      </div>
+      <div class="related-item">
+        <div class="r-cat">Fiscal Mysteries</div>
+        <a href="#">Congress Votes to Study Whether to Commission a Study on Studies</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div style="font-size:22px; font-family:'Playfair Display',serif; color:#fff; margin-bottom:8px;">GOVMENT.ORG</div>
+  <div>Unveiling the Truth Since Someone Had to · <a href="/">Home</a> · <a href="#">Archive</a> · <a href="#">Contact the Bureau</a></div>
+  <div style="margin-top:12px; color:#3a3020;">© 2026 Govment.org · Satire · All facts approximate · Not liable for democracy</div>
+</footer>
+
+</body>
+</html>
