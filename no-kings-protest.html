@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nation's King Graciously Permits Millions to Protest Nation's King | Govment.org</title>
+  <meta name="description" content="In what historians are calling an unprecedented display of monarchical restraint, the king has thus far allowed an estimated eight to nine million subjects to publicly state that there is no king." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --ink: #1a1008;
+      --paper: #f5f0e8;
+      --aged: #e8e0cc;
+      --red: #c0392b;
+      --gold: #8b6914;
+      --mid: #5a4a2a;
+      --light: #9a8c72;
+      --rule: #c8b898;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    /* ── SITE HEADER ── */
+    .site-header {
+      background: var(--ink);
+      color: var(--paper);
+      text-align: center;
+      padding: 28px 24px 20px;
+      border-bottom: 4px solid var(--red);
+      position: relative;
+      overflow: hidden;
+    }
+    .site-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 3px,
+        rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px
+      );
+      pointer-events: none;
+    }
+    .site-flag {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 8vw, 72px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .site-flag span { color: var(--red); }
+    .site-tagline {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--light);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .site-nav {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .site-nav a {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--rule);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .site-nav a:hover { color: #fff; }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--red);
+      color: #fff;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      padding: 6px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-inner {
+      display: inline-block;
+      animation: scroll-ticker 45s linear infinite;
+    }
+    .ticker-inner a {
+      margin: 0 40px;
+      color: #fff;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .ticker-inner a:hover { color: #ffcccc; text-decoration: underline; }
+    @keyframes scroll-ticker {
+      from { transform: translateX(100vw); }
+      to { transform: translateX(-100%); }
+    }
+
+    /* ── ARTICLE WRAPPER ── */
+    .article-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── KICKER ── */
+    .kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .kicker::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    /* ── HEADLINE ── */
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 52px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    /* ── DECK ── */
+    .deck {
+      font-family: 'Source Serif 4', serif;
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--mid);
+      border-left: 3px solid var(--red);
+      padding-left: 16px;
+      margin-bottom: 24px;
+    }
+
+    /* ── BYLINE BAR ── */
+    .byline-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 36px;
+    }
+    .byline {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--mid);
+      letter-spacing: 1px;
+    }
+    .byline strong { color: var(--gold); }
+    .datestamp {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--light);
+      letter-spacing: 2px;
+    }
+
+    /* ── ARTICLE IMAGE ── */
+    .article-image {
+      width: 100%;
+      margin-bottom: 12px;
+      background: var(--ink);
+      aspect-ratio: 16/9;
+      overflow: hidden;
+    }
+    .article-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.9;
+      display: block;
+    }
+    .image-caption {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--light);
+      letter-spacing: 1px;
+      margin-bottom: 32px;
+      padding-left: 4px;
+      border-left: 2px solid var(--rule);
+      padding-left: 10px;
+    }
+
+    /* ── NUMBERS STRIP ── */
+    .numbers-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--rule);
+      margin: 36px 0;
+    }
+    .numbers-cell {
+      padding: 20px 16px;
+      text-align: center;
+      border-right: 1px solid var(--rule);
+    }
+    .numbers-cell:last-child { border-right: none; }
+    .numbers-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--red);
+      line-height: 1;
+    }
+    .numbers-lbl {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--light);
+      text-transform: uppercase;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    /* ── BODY COPY ── */
+    .article-body p {
+      margin-bottom: 24px;
+      color: var(--ink);
+    }
+    .article-body p:first-child::first-letter {
+      font-family: 'Playfair Display', serif;
+      font-size: 72px;
+      font-weight: 900;
+      float: left;
+      line-height: 0.75;
+      margin: 8px 8px 0 0;
+      color: var(--red);
+    }
+
+    /* ── CLASSIFIED BOX ── */
+    .classified-box {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 24px 28px;
+      margin: 36px 0;
+      border-left: 5px solid var(--gold);
+      position: relative;
+    }
+    .classified-box .classified-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .classified-box .classified-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-style: italic;
+      line-height: 1.5;
+      color: #fff;
+    }
+    .classified-box .classified-attr {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--light);
+      letter-spacing: 2px;
+      margin-top: 10px;
+    }
+    .classified-box .classified-note {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      color: #3a2a10;
+      letter-spacing: 1px;
+      margin-top: 8px;
+    }
+
+    /* ── PULL QUOTE ── */
+    blockquote {
+      margin: 36px 0;
+      padding: 0 0 0 24px;
+      border-left: 4px solid var(--gold);
+    }
+    blockquote p {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--mid);
+      line-height: 1.5;
+      margin: 0 0 8px !important;
+    }
+    blockquote cite {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--light);
+      text-transform: uppercase;
+      font-style: normal;
+    }
+
+    /* ── LOGICAL PARADOX TABLE ── */
+    .paradox-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 36px 0;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+    }
+    .paradox-table th {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 10px 14px;
+      text-align: left;
+      letter-spacing: 2px;
+      font-size: 9px;
+      text-transform: uppercase;
+    }
+    .paradox-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+      line-height: 1.6;
+      color: var(--mid);
+    }
+    .paradox-table tr:nth-child(even) td { background: var(--aged); }
+    .paradox-table .conclusion td {
+      background: var(--ink);
+      color: var(--paper);
+      font-style: italic;
+    }
+
+    /* ── SOURCE BOX ── */
+    .source-box {
+      background: var(--aged);
+      border: 1px solid var(--rule);
+      padding: 16px 20px;
+      margin: 36px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .source-box .source-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+    .source-box .source-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: var(--light);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .source-box .source-title {
+      font-family: 'Source Serif 4', serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+    .source-box a {
+      color: var(--red);
+      text-decoration: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 1px;
+      display: inline-block;
+      margin-top: 6px;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1px;
+      transition: color 0.2s;
+    }
+    .source-box a:hover { color: var(--gold); }
+
+    /* ── TAGS ── */
+    .tags {
+      margin-top: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid var(--rule);
+      color: var(--mid);
+    }
+
+    /* ── DISCLAIMER ── */
+    .disclaimer {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 2px solid var(--rule);
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--light);
+      letter-spacing: 1px;
+      line-height: 1.8;
+    }
+
+    /* ── RELATED ── */
+    .related {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 3px double var(--rule);
+    }
+    .related-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--light);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .related-item { border-top: 2px solid var(--rule); padding-top: 12px; }
+    .related-item a {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+      line-height: 1.3;
+      display: block;
+      transition: color 0.2s;
+    }
+    .related-item a:hover { color: var(--red); }
+    .related-item .r-cat {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* ── SITE FOOTER ── */
+    .site-footer {
+      background: var(--ink);
+      color: var(--light);
+      text-align: center;
+      padding: 32px 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      line-height: 2;
+    }
+    .site-footer a { color: var(--rule); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .numbers-strip { grid-template-columns: 1fr; }
+      .numbers-cell { border-right: none; border-bottom: 1px solid var(--rule); }
+      .paradox-table { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SITE HEADER -->
+<header class="site-header">
+  <div class="site-flag">GOV<span>MENT</span>.ORG</div>
+  <div class="site-tagline">Your Source for Unconventional Truths Since the Beginning of the End</div>
+  <nav class="site-nav">
+    <a href="/">Home</a>
+    <a href="#">Executive Branch</a>
+    <a href="#">Fiscal Mysteries</a>
+    <a href="#">War &amp; Stuff</a>
+    <a href="#">Job Postings</a>
+    <a href="#">About</a>
+  </nav>
+</header>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <a href="/no-kings-protest.html">&#9889; BREAKING: Nation&#39;s king permits millions to protest nation&#39;s king &middot; Paradox unresolved</a>
+    <a href="/congress-mid-sentence-adjourn.html">&#9889; UPDATE: House adjourns itself before congressman can finish sentence</a>
+    <a href="/dhs-warehouses-billion.html">&#9889; DEVELOPING: $1 billion in warehouses confirmed to be warehouses</a>
+    <a href="/president-job-posting.html">&#9889; NOW HIRING: President of the United States &middot; Two impeachments permitted</a>
+    <a href="/sacrifices-to-sungods-and-global-warming.html">&#9889; SCIENCE: Sun god sacrifices linked to global warming &middot; Sun unavailable for comment</a>
+  </div>
+</div>
+
+<!-- ARTICLE -->
+<main class="article-wrap">
+
+  <div class="kicker">Constitutional Paradoxes</div>
+
+  <h1>Nation's King Graciously Permits Millions to Publicly Protest Nation's King</h1>
+
+  <p class="deck">In what historians are calling an unprecedented display of monarchical restraint, the king has thus far allowed an estimated eight to nine million subjects to travel freely, gather publicly, and loudly announce that there is no king.</p>
+
+  <div class="byline-bar">
+    <div class="byline">By <strong>Staff Reporter, Bureau of Logical Consistencies</strong></div>
+    <div class="datestamp">APRIL 11, 2026 &nbsp;·&nbsp; GOVMENT.ORG</div>
+  </div>
+
+  <!-- Article image placeholder - replace with no-kings-protest.png -->
+  <div class="article-image">
+    <img src="/no-kings-protest.png" alt="Millions gather in public to announce there is no king" />
+  </div>
+  <p class="image-caption">Millions of Americans exercised their right to free assembly Thursday to inform the nation that free assembly no longer exists. &nbsp;|&nbsp; Photo: Someone who was there</p>
+
+  <div class="article-body">
+
+    <p>WASHINGTON, D.C. — Approximately eight to nine million Americans gathered in more than 3,300 locations across all fifty states last month to exercise their constitutional rights to free speech, peaceful assembly, and public demonstration, in order to protest that they no longer have constitutional rights to free speech, peaceful assembly, or public demonstration. The protests were, by all accounts, extremely well-attended. No one was stopped.</p>
+
+    <div class="numbers-strip">
+      <div class="numbers-cell">
+        <div class="numbers-num">9M</div>
+        <div class="numbers-lbl">Americans who freely gathered to protest freedom's end</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-num">3,300+</div>
+        <div class="numbers-lbl">Public locations where public gathering was publicly permitted</div>
+      </div>
+      <div class="numbers-cell">
+        <div class="numbers-num">0</div>
+        <div class="numbers-lbl">Kings present, per the signs of the nine million people present</div>
+      </div>
+    </div>
+
+    <p>The demonstrations, held March 28th under the banner "No Kings," were organized by a coalition of grassroots groups and drew participants from every state, including rallies in locations as varied as Bozeman, Montana, where an estimated 8,000 gathered, and The Villages, Florida, where more than 6,750 residents protested, in a retirement community that voted overwhelmingly for the president they were protesting, a detail that participants and organizers described as "not the point" and which Govment.org found deeply interesting.</p>
+
+    <p>At a White House Easter lunch on April 1st, the president addressed the protests directly, noting that crowds had begun calling him a king. "They call me king now," he said. "Can you believe it?" He continued to explain that a true king would be doing considerably more than he is currently doing, implying that the protesters' concerns may be, if anything, insufficiently alarmed. The footage of this speech was subsequently removed from the White House website, which is a thing kings do not do, and also a thing the White House did.</p>
+
+    <div class="classified-box">
+      <div class="classified-label">Official White House Statement &mdash; Easter Remarks, April 1, 2026 [Since Removed]</div>
+      <div class="classified-text">"No kings. I'm such a king, I can't get a ballroom approved. It's pretty amazing, right? If I was a king, we'd be doing a lot more."</div>
+      <div class="classified-attr">&mdash; The President of the United States, at an Easter lunch, April 1, 2026</div>
+      <div class="classified-note">NOTE: This video was removed from the White House website. This text remains. The situation is ongoing.</div>
+    </div>
+
+    <p>The White House's official response to the nine-million-person protest was that the White House does not think about the protest at all, and that only reporters covering the protests care about them, a statement released to reporters, who covered it. A separate official characterized the events as "Trump Derangement Therapy Sessions," which, if accurate, would make them the largest and most geographically distributed therapy sessions in human history, a record that the organizers did not dispute.</p>
+
+    <blockquote>
+      <p>"We showed up today to make one thing clear: in America, we do not have kings."</p>
+      <cite>&mdash; Protest organizer, speaking freely, at a permitted public event, in America, unmolested</cite>
+    </blockquote>
+
+    <p>Govment.org's Bureau of Logical Consistencies reviewed the situation and prepared the following analysis for readers who remain confused:</p>
+
+  </div>
+
+  <!-- PARADOX TABLE -->
+  <table class="paradox-table">
+    <thead>
+      <tr>
+        <th>Observed Fact</th>
+        <th>What This Implies</th>
+        <th>Complicating Factor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Nine million people gathered freely to say there is no freedom to gather</td>
+        <td>There is freedom to gather</td>
+        <td>The nine million people disagree</td>
+      </tr>
+      <tr>
+        <td>Protesters traveled across state lines without incident to protest authoritarian travel restrictions</td>
+        <td>There are currently no authoritarian travel restrictions</td>
+        <td>The protesters are concerned about future authoritarian travel restrictions, which is different</td>
+      </tr>
+      <tr>
+        <td>The president called himself a king at Easter lunch</td>
+        <td>The president considers himself a king</td>
+        <td>The White House deleted the video, suggesting the president does not consider himself to have said this</td>
+      </tr>
+      <tr>
+        <td>The president said a real king would be doing more</td>
+        <td>The president agrees the protesters may be under-protesting</td>
+        <td>This was also in the deleted video</td>
+      </tr>
+      <tr class="conclusion">
+        <td colspan="3">BUREAU CONCLUSION: The situation is unclear. The protests were real. The king was not there. The king was not not there. The video no longer exists. We will continue monitoring.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="article-body">
+    <p>Over 99% of the demonstrations were entirely peaceful, according to data compiled by the Armed Conflict Location and Event Data Project, making them simultaneously the largest coordinated protest in American history and the most orderly, a combination that organizers called "the whole point" and that administration officials did not comment on because they were not thinking about it at all.</p>
+
+    <p>Participants in The Villages, the Florida retirement community, told local reporters they were concerned about the direction of the country. Several noted they had voted for the president in 2024. When asked to reconcile these two facts, they said that was also the whole point, which Govment.org accepted and moved on from.</p>
+
+    <p>At press time, the right to peaceably assemble remained intact. The right to peaceably assemble had also been the subject of nine million people assembling to say it was not intact. Both of these things continued to be true simultaneously. Constitutional scholars contacted by this publication said this was, quote, "a lot," and declined further comment.</p>
+
+    <p>A fourth No Kings protest has not yet been announced. The king, who is not a king, could not be reached for comment.</p>
+  </div>
+
+  <!-- SOURCE BOX -->
+  <div class="source-box">
+    <div class="source-icon">📰</div>
+    <div>
+      <div class="source-label">Read the Actual Story &mdash; Britannica</div>
+      <div class="source-title">No Kings Protests: 2026, Meaning, Turnout, Numbers &amp; Around the World</div>
+      <a href="https://www.britannica.com/event/No-Kings-protests" target="_blank" rel="noopener noreferrer">Read the full record at Britannica.com &rarr;</a>
+    </div>
+  </div>
+
+  <div class="tags">
+    <span class="tag">No Kings</span>
+    <span class="tag">Constitutional Paradoxes</span>
+    <span class="tag">Free Assembly</span>
+    <span class="tag">Executive Branch</span>
+    <span class="tag">Deleted Videos</span>
+    <span class="tag">Logic</span>
+    <span class="tag">The Villages</span>
+    <span class="tag">Unresolved</span>
+  </div>
+
+  <div class="disclaimer">
+    DISCLAIMER: Govment.org is a satirical publication. All articles are works of fiction and parody.<br>
+    The nine million people, the deleted video, the Easter speech, and The Villages are all real.<br>
+    The king situation remains, per our Bureau, unclear.
+  </div>
+
+  <!-- RELATED -->
+  <div class="related">
+    <div class="related-label">More From Govment.org</div>
+    <div class="related-grid">
+      <div class="related-item">
+        <div class="r-cat">Legislative Achievement</div>
+        <a href="/congress-mid-sentence-adjourn.html">House Adjourns Itself Before Congressman Can Finish Sentence</a>
+      </div>
+      <div class="related-item">
+        <div class="r-cat">Fiscal Mysteries</div>
+        <a href="/dhs-warehouses-billion.html">DHS Confirms $1 Billion in Warehouses Are, In Fact, Warehouses</a>
+      </div>
+      <div class="related-item">
+        <div class="r-cat">Job Postings</div>
+        <a href="/president-job-posting.html">Now Hiring: President of the United States</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div style="font-size:22px; font-family:'Playfair Display',serif; color:#fff; margin-bottom:8px;">GOVMENT.ORG</div>
+  <div>Unveiling the Truth Since Someone Had To &nbsp;&middot;&nbsp; <a href="/">Home</a> &nbsp;&middot;&nbsp; <a href="#">Archive</a> &nbsp;&middot;&nbsp; <a href="#">Contact the Bureau</a></div>
+  <div style="margin-top:12px; color:#3a3020;">&#169; 2026 Govment.org &nbsp;&middot;&nbsp; Satire &nbsp;&middot;&nbsp; All facts approximate &nbsp;&middot;&nbsp; Not liable for democracy &nbsp;&middot;&nbsp; King situation ongoing</div>
+</footer>
+
+</body>
+</html>
