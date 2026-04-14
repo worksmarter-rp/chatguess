@@ -334,7 +334,11 @@ async function run() {
   console.log(`   Angle: ${brief.angle}`);
   console.log(`   Source: ${brief.sourcePublication}`);
 
-  // 2. Writer
+  // Wait 65 seconds to clear the 1-minute rate limit window before Writer call
+  console.log("⏳ Waiting 65 seconds for rate limit window to reset...");
+  await new Promise((resolve) => setTimeout(resolve, 65000));
+
+  // 2. Writer — pass only the brief, not the full scout response
   console.log("✍️  WRITER AGENT: Generating article...");
   const articleBody = await callClaude(
     WRITER_SYSTEM,
