@@ -1,0 +1,40 @@
+name: Govment.org — Auto-generate satirical content
+
+on:
+  schedule:
+    # Every Monday and Thursday at 10am UTC (6am Eastern)
+    - cron: '0 10 * * 1,4'
+  workflow_dispatch:
+    # Allows manual trigger from GitHub Actions tab anytime
+
+jobs:
+  generate-article:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Create scripts directory if needed
+        run: mkdir -p scripts
+
+      - name: Run Scout + Writer agents
+        run: node scripts/generate-article.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Commit new article to repo
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "🤖 Auto-published: new Govment.org article"
+          commit_user_name: "Govment Bot"
+          commit_user_email: "bot@govment.org"
+          file_pattern: "*.html scripts/last-image-prompt.json"
