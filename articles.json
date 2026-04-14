@@ -1,11 +1,36 @@
 [
   {
+    "slug": "trump-administration-proposes-solving-government-building-ma",
+    "headline": "Trump Administration Proposes Solving Government Building Maintenance Issues with Literal Magic Paint",
+    "deck": "President claims 'magic paint with silicate' will strengthen stone and prevent staining, experts say it doesn't exist",
+    "excerpt": "The White House has formally submitted plans to coat the Eisenhower Executive Office Building with what Trump calls 'magic paint.' Preservation experts warn the miracle coating could cause irreversible damage to the 1888 structure.",
+    "category": "Executive Branch",
+    "tags": [
+      "white house",
+      "preservation",
+      "architecture",
+      "bureaucracy"
+    ],
+    "imageFilename": "magic-paint-office-building",
+    "sourceUrl": "https://www.cnn.com/2026/04/11/politics/eisenhower-executive-office-building-paint-trump",
+    "sourcePublication": "CNN",
+    "date": "2026-04-14"
+  },
+  {
     "slug": "no-kings-protest",
     "headline": "Nation's King Graciously Permits Millions to Publicly Protest Nation's King",
     "deck": "An estimated eight to nine million Americans exercised their constitutional rights to free speech and assembly in order to announce that their constitutional rights no longer exist.",
     "excerpt": "Eight to nine million Americans freely assembled to announce that free assembly is under threat. The king, who is not a king, was unavailable for comment. The deleted video was also unavailable.",
     "category": "Constitutional Paradoxes",
-    "tags": ["No Kings", "Free Assembly", "Executive Branch", "Deleted Videos", "Logic", "The Villages", "Unresolved"],
+    "tags": [
+      "No Kings",
+      "Free Assembly",
+      "Executive Branch",
+      "Deleted Videos",
+      "Logic",
+      "The Villages",
+      "Unresolved"
+    ],
     "imageFilename": "no-kings-protest",
     "sourceUrl": "https://www.britannica.com/event/No-Kings-protests",
     "sourcePublication": "Britannica",
@@ -17,7 +42,14 @@
     "deck": "In a display of procedural athleticism not seen since the last time someone tried to say something, the U.S. House gaveled out Thursday before Rep. Glenn Ivey could complete his opening remarks.",
     "excerpt": "The complete official transcript of the session runs to one sentence. A war continued unaffected. Rep. Ivey's mouth remained open. The gavel has been secured.",
     "category": "Legislative Achievement",
-    "tags": ["Congress", "War Powers", "Iran", "Pro Forma", "Gavel", "Things Left Unsaid"],
+    "tags": [
+      "Congress",
+      "War Powers",
+      "Iran",
+      "Pro Forma",
+      "Gavel",
+      "Things Left Unsaid"
+    ],
     "imageFilename": "hero-congress-gavel",
     "sourceUrl": "https://www.nbcnews.com/politics/congress/republicans-block-effort-halt-trumps-war-iran-civilization-threat-rcna267345",
     "sourcePublication": "NBC News",
@@ -29,7 +61,14 @@
     "deck": "After a thorough review, the Department of Homeland Security has verified that eleven large, empty buildings it purchased to house immigrants are large, empty buildings.",
     "excerpt": "After a thorough review, the Department of Homeland Security has verified that eleven large, empty buildings are large, empty buildings. Officials are proud of the loading docks.",
     "category": "Fiscal Mysteries",
-    "tags": ["DHS", "Fiscal Responsibility", "Warehouses", "Government Spending", "Things That Exist", "Phase Two"],
+    "tags": [
+      "DHS",
+      "Fiscal Responsibility",
+      "Warehouses",
+      "Government Spending",
+      "Things That Exist",
+      "Phase Two"
+    ],
     "imageFilename": "warehouse-billion",
     "sourceUrl": "https://www.mprnews.org/politics",
     "sourcePublication": "MPR News",
@@ -41,7 +80,13 @@
     "deck": "A shocking investigation into ancient ritual practices and their role in the modern climate crisis.",
     "excerpt": "A shocking investigation into ancient ritual practices and their role in the modern climate crisis. The results will not surprise anyone who has read the comments section.",
     "category": "Science & Policy",
-    "tags": ["Science", "Climate", "Sun Gods", "Policy", "Ancient History"],
+    "tags": [
+      "Science",
+      "Climate",
+      "Sun Gods",
+      "Policy",
+      "Ancient History"
+    ],
     "imageFilename": "sungod-warming",
     "sourceUrl": "https://govment.org/sacrifices-to-sungods-and-global-warming.html",
     "sourcePublication": "Govment.org",
@@ -53,7 +98,13 @@
     "deck": "Think you've got what it takes to be the leader of the free world? Review the qualifications, compensation structure, and nuclear launch protocol.",
     "excerpt": "Think you've got what it takes? Review the qualifications, compensation structure, and nuclear launch protocol. Benefits include Air Force One and complete immunity.",
     "category": "Job Postings",
-    "tags": ["Executive Branch", "Job Postings", "President", "Benefits", "Nuclear Authority"],
+    "tags": [
+      "Executive Branch",
+      "Job Postings",
+      "President",
+      "Benefits",
+      "Nuclear Authority"
+    ],
     "imageFilename": "president-job",
     "sourceUrl": "https://govment.org/president-job-posting.html",
     "sourcePublication": "Govment.org",
