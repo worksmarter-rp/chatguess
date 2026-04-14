@@ -7,10 +7,13 @@ on:
   workflow_dispatch:
     # Allows manual trigger from GitHub Actions tab anytime
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   generate-article:
     runs-on: ubuntu-latest
-    
+
     permissions:
       contents: write
 
@@ -21,20 +24,21 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
-      - name: Create scripts directory if needed
+      - name: Ensure scripts directory exists
         run: mkdir -p scripts
 
-      - name: Run Scout + Writer agents
+      - name: Run Scout + Writer + Image + Index agents
         run: node scripts/generate-article.js
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 
-      - name: Commit new article to repo
+      - name: Commit new article, image, and updated index to repo
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "🤖 Auto-published: new Govment.org article"
           commit_user_name: "Govment Bot"
           commit_user_email: "bot@govment.org"
-          file_pattern: "*.html scripts/last-image-prompt.json"
+          file_pattern: "*.html *.png articles.json scripts/last-image-prompt.json"
