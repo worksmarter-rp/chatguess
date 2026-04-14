@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "no-kings-protest",
+    "headline": "Nation's King Graciously Permits Millions to Publicly Protest Nation's King",
+    "deck": "An estimated eight to nine million Americans exercised their constitutional rights to free speech and assembly in order to announce that their constitutional rights no longer exist.",
+    "excerpt": "Eight to nine million Americans freely assembled to announce that free assembly is under threat. The king, who is not a king, was unavailable for comment. The deleted video was also unavailable.",
+    "category": "Constitutional Paradoxes",
+    "tags": ["No Kings", "Free Assembly", "Executive Branch", "Deleted Videos", "Logic", "The Villages", "Unresolved"],
+    "imageFilename": "no-kings-protest",
+    "sourceUrl": "https://www.britannica.com/event/No-Kings-protests",
+    "sourcePublication": "Britannica",
+    "date": "2026-04-11"
+  },
+  {
+    "slug": "congress-mid-sentence-adjourn",
+    "headline": "House Adjourns Itself Before Congressman Can Finish Sentence, Sets New Land Speed Record",
+    "deck": "In a display of procedural athleticism not seen since the last time someone tried to say something, the U.S. House gaveled out Thursday before Rep. Glenn Ivey could complete his opening remarks.",
+    "excerpt": "The complete official transcript of the session runs to one sentence. A war continued unaffected. Rep. Ivey's mouth remained open. The gavel has been secured.",
+    "category": "Legislative Achievement",
+    "tags": ["Congress", "War Powers", "Iran", "Pro Forma", "Gavel", "Things Left Unsaid"],
+    "imageFilename": "hero-congress-gavel",
+    "sourceUrl": "https://www.nbcnews.com/politics/congress/republicans-block-effort-halt-trumps-war-iran-civilization-threat-rcna267345",
+    "sourcePublication": "NBC News",
+    "date": "2026-04-10"
+  },
+  {
+    "slug": "dhs-warehouses-billion",
+    "headline": "DHS Confirms $1 Billion Worth of Warehouses Are, In Fact, Warehouses",
+    "deck": "After a thorough review, the Department of Homeland Security has verified that eleven large, empty buildings it purchased to house immigrants are large, empty buildings.",
+    "excerpt": "After a thorough review, the Department of Homeland Security has verified that eleven large, empty buildings are large, empty buildings. Officials are proud of the loading docks.",
+    "category": "Fiscal Mysteries",
+    "tags": ["DHS", "Fiscal Responsibility", "Warehouses", "Government Spending", "Things That Exist", "Phase Two"],
+    "imageFilename": "warehouse-billion",
+    "sourceUrl": "https://www.mprnews.org/politics",
+    "sourcePublication": "MPR News",
+    "date": "2026-04-10"
+  },
+  {
+    "slug": "sacrifices-to-sungods-and-global-warming",
+    "headline": "Experts Explore Definitive Link Between Sun God Sacrifices and Global Warming",
+    "deck": "A shocking investigation into ancient ritual practices and their role in the modern climate crisis.",
+    "excerpt": "A shocking investigation into ancient ritual practices and their role in the modern climate crisis. The results will not surprise anyone who has read the comments section.",
+    "category": "Science & Policy",
+    "tags": ["Science", "Climate", "Sun Gods", "Policy", "Ancient History"],
+    "imageFilename": "sungod-warming",
+    "sourceUrl": "https://govment.org/sacrifices-to-sungods-and-global-warming.html",
+    "sourcePublication": "Govment.org",
+    "date": "2024-01-01"
+  },
+  {
+    "slug": "president-job-posting",
+    "headline": "Now Hiring: President of the United States — See Full Job Description and Benefits Package",
+    "deck": "Think you've got what it takes to be the leader of the free world? Review the qualifications, compensation structure, and nuclear launch protocol.",
+    "excerpt": "Think you've got what it takes? Review the qualifications, compensation structure, and nuclear launch protocol. Benefits include Air Force One and complete immunity.",
+    "category": "Job Postings",
+    "tags": ["Executive Branch", "Job Postings", "President", "Benefits", "Nuclear Authority"],
+    "imageFilename": "president-job",
+    "sourceUrl": "https://govment.org/president-job-posting.html",
+    "sourcePublication": "Govment.org",
+    "date": "2024-01-01"
+  }
+]
