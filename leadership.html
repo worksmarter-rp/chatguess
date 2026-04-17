@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The ATLATL Framework™ — GovMent.org</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300;1,8..60,400;0,8..60,700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1208; --ink-mid: #3d2e10; --ink-light: #6b5a3e; --ink-faint: #c8b89a;
+    --paper: #f5f0e8; --paper-dark: #ede5d0; --paper-mid: #e8dfc8;
+    --rule: #8b7355; --rule-thin: #b8a07a; --red: #8b1a1a; --gold: #b8860b;
+    --atlatl: #5c3a00;
+  }
+  body { background: var(--paper); color: var(--ink); font-family: 'Libre Baskerville', Georgia, serif; font-size: 15px; line-height: 1.65; }
+
+  .masthead { background: var(--paper-dark); border-bottom: 3px double var(--ink); }
+  .masthead-center { text-align: center; padding: 0.75rem 2rem; }
+  .masthead-tagline { font-family: 'Source Serif 4', serif; font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-light); display: block; }
+  .section-band { background: var(--ink); color: var(--paper); text-align: center; font-family: 'Source Serif 4', serif; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; padding: 5px 2rem; }
+
+  .page { max-width: 960px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
+
+  .article-head { text-align: center; border-bottom: 3px double var(--ink); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+  .kicker { font-family: 'Source Serif 4', serif; font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--red); margin-bottom: 0.5rem; }
+  h1 { font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 900; line-height: 1.0; color: var(--ink); margin-bottom: 0.5rem; letter-spacing: -1px; }
+  h1 em { font-style: italic; }
+  .deck { font-family: 'Playfair Display', serif; font-size: 18px; font-style: italic; color: var(--ink-mid); max-width: 640px; margin: 0 auto 0.5rem; line-height: 1.4; }
+  .deck-secondary { font-family: 'Source Serif 4', serif; font-size: 11px; letter-spacing: 0.12em; color: var(--ink-light); text-transform: uppercase; margin-bottom: 1rem; }
+  .byline-strip { display: flex; justify-content: center; gap: 2.5rem; font-family: 'Source Serif 4', serif; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); border-top: 1px solid var(--rule-thin); border-bottom: 1px solid var(--rule-thin); padding: 6px 0; margin-top: 0.75rem; }
+  .byline-strip strong { color: var(--ink); }
+
+  .hero { width: 100%; height: 320px; background: linear-gradient(160deg, #3d1f00 0%, #1a1208 50%, #1a2a1a 100%); border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem; overflow: hidden; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-placeholder { font-family: 'Playfair Display', serif; font-size: 12px; font-style: italic; color: rgba(245,240,232,0.3); text-align: center; padding: 1rem; }
+  .caption { font-family: 'Source Serif 4', serif; font-size: 11px; color: var(--ink-light); font-style: italic; text-align: center; margin-bottom: 2rem; }
+
+  .etymology { border: 1px solid var(--rule); border-left: 4px solid var(--atlatl); background: var(--paper-dark); padding: 1rem 1.25rem; margin-bottom: 2rem; }
+  .etymology-label { font-family: 'Source Serif 4', serif; font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.4rem; }
+  .etymology p { font-size: 13px; color: var(--ink-mid); line-height: 1.6; margin: 0; }
+  .etymology p + p { margin-top: 0.5rem; }
+
+  .intro { max-width: 700px; margin: 0 auto 2rem; text-align: center; }
+  .intro p { font-size: 15px; color: var(--ink-mid); line-height: 1.7; margin-bottom: 0.75rem; }
+  .intro p:first-child::first-letter { font-family: 'Playfair Display', serif; font-size: 4.5em; font-weight: 900; float: left; line-height: 0.78; margin: 0.08em 0.1em 0 0; color: var(--ink); }
+
+  .pillars-header { text-align: center; border-top: 3px double var(--ink); border-bottom: 1px solid var(--rule-thin); padding: 1rem 0; }
+  .pillars-header h2 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--ink); }
+  .pillars-header p { font-family: 'Source Serif 4', serif; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-top: 3px; }
+
+  .pillars-grid { display: grid; grid-template-columns: repeat(6, 1fr); border-bottom: 3px double var(--ink); margin-bottom: 2.5rem; }
+  .pillar { padding: 1.1rem 0.75rem; border-right: 1px solid var(--rule-thin); text-align: center; }
+  .pillar:last-child { border-right: none; }
+  .pillar-letter { font-family: 'Playfair Display', serif; font-size: 56px; font-weight: 900; line-height: 1; color: var(--atlatl); display: block; }
+  .pillar-word { font-family: 'Playfair Display', serif; font-size: 12px; font-weight: 700; color: var(--ink); display: block; margin: 0.2rem 0 0.3rem; }
+  .pillar-motto { font-family: 'Source Serif 4', serif; font-size: 9.5px; font-style: italic; color: var(--ink-light); display: block; margin-bottom: 0.6rem; line-height: 1.35; }
+  .pillar-summary { font-family: 'Libre Baskerville', serif; font-size: 11.5px; color: var(--ink-mid); line-height: 1.55; margin-bottom: 0.7rem; text-align: left; font-style: italic; border-bottom: 1px solid var(--paper-mid); padding-bottom: 0.5rem; }
+  .pillar-behaviors { list-style: none; text-align: left; }
+  .pillar-behaviors li { font-family: 'Source Serif 4', serif; font-size: 10.5px; color: var(--ink-mid); padding: 3px 0 3px 13px; border-top: 1px solid var(--paper-mid); position: relative; line-height: 1.4; }
+  .pillar-behaviors li::before { content: "✓"; position: absolute; left: 0; font-size: 9px; top: 4px; color: var(--gold); }
+
+  .quotes-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border: 1px solid var(--rule); margin-bottom: 2.5rem; }
+  .quote-block { padding: 1.1rem 1.25rem; border-right: 1px solid var(--rule-thin); }
+  .quote-block:last-child { border-right: none; }
+  .quote-text { font-family: 'Playfair Display', serif; font-size: 14px; font-style: italic; color: var(--ink); line-height: 1.5; margin-bottom: 0.5rem; }
+  .quote-attr { font-family: 'Source Serif 4', serif; font-size: 10px; letter-spacing: 0.05em; color: var(--ink-light); text-transform: uppercase; line-height: 1.5; }
+
+  .cert-box { border: 1px solid var(--rule); border-top: 4px solid var(--atlatl); background: var(--paper-mid); padding: 1.5rem 2rem; text-align: center; margin-bottom: 2.5rem; }
+  .cert-box h3 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; margin-bottom: 0.4rem; }
+  .cert-details { font-family: 'Source Serif 4', serif; font-size: 12px; color: var(--ink-mid); letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+  .cert-fine { font-size: 10px; font-style: italic; color: var(--ink-light); border-top: 1px solid var(--rule-thin); padding-top: 0.6rem; margin-top: 0.6rem; line-height: 1.6; }
+
+  footer { border-top: 3px double var(--ink); padding: 1rem 2rem; background: var(--paper-dark); text-align: center; font-family: 'Source Serif 4', serif; font-size: 10px; letter-spacing: 0.06em; color: var(--ink-light); }
+  footer a { color: var(--ink-light); }
+
+  @media (max-width: 800px) {
+    h1 { font-size: 48px; }
+    .pillars-grid { grid-template-columns: repeat(3, 1fr); }
+    .pillar:nth-child(3) { border-right: none; }
+    .quotes-row { grid-template-columns: 1fr; }
+    .quote-block { border-right: none; border-bottom: 1px solid var(--rule-thin); }
+    .gothic { font-size: 48px; }
+    .byline-strip { gap: 1rem; font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-center">
+    <span class="masthead-tagline">Harrowgate Institute for Organizational Excellence</span>
+  </div>
+  <div class="section-band">Special Advertising Feature</div>
+</header>
+
+<main class="page">
+
+  <div class="article-head">
+    <div class="kicker">★ Paid Partnership · Harrowgate Institute for Organizational Excellence ★</div>
+    <h1>The <em>ATLATL</em><br>Framework™</h1>
+    <p class="deck">Six pillars of precision leadership for organizations ready to throw further than their arm alone would allow</p>
+    <p class="deck-secondary">Pronounced AT-lat-uhl · Third Edition, Revised &amp; Enlarged</p>
+    <div class="byline-strip">
+      <span>Written by <strong>Cornelius J. Harrowgate IV</strong></span>
+      <span>Illustrated by <strong>G.P.T. Imageworks</strong></span>
+      <span>Published by <strong>The Harrowgate Institute Press</strong></span>
+    </div>
+  </div>
+
+  <div style="border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 1.1rem 2rem; margin-bottom: 2rem; text-align: center;">
+    <p style="font-family:'Playfair Display',serif; font-size:18px; font-style:italic; color:var(--ink); line-height:1.5; margin-bottom:0.4rem;">"I have attended seventeen leadership frameworks in fourteen years. ATLATL is the first one where I recognized myself in every single pillar and felt, briefly, proud of that."</p>
+    <p style="font-family:'Source Serif 4',serif; font-size:10px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-light);">— Vice President, Something Transformational &nbsp;·&nbsp; Name withheld at their attorney's request</p>
+  </div>
+
+  <div class="hero">
+    <!-- <img src="images/atlatl-hero.jpg" alt="A visionary executive hurls a spear across a boardroom"> -->
+    <div class="hero-placeholder">[ atlatl-hero.jpg ]</div>
+  </div>
+  <p class="caption">A senior leader demonstrates precision trajectory at the Harrowgate Institute Annual Excellence Summit, Scottsdale, 2022. Dart not included in standard certification.</p>
+
+  <div class="etymology">
+    <div class="etymology-label">A Note on the Name</div>
+    <p>The word <em>atlatl</em> comes from the language of the Aztec civilization, where it referred to a spear-throwing device — a lever that extended the reach of the human arm, propelling a dart farther and faster than muscle alone could achieve. Spanish conquistadors arriving in steel plate armor reportedly feared it above all other weapons.</p>
+    <p>The ATLATL Framework is not a replacement for your leadership. It is the lever behind it — the mechanism that extends your reach, increases your velocity, and ensures your decisions land with force at distances your arm alone could never achieve. Also, it fit the acronym.</p>
+  </div>
+
+  <div class="intro">
+    <p>For sixteen years, the Harrowgate Institute has studied the gap between what organizations say they value in a leader and what they actually promote. That gap, it turns out, is where executives live. The ATLATL Framework does not attempt to close this gap. It furnishes it.</p>
+    <p>What other frameworks call "problems," ATLATL calls "unleveraged trajectory opportunities." What exit surveys call "reasons people left," we call "voluntary arc corrections." The framework does not change what is happening in your organization. It changes what you call it, which our research shows is almost as good.</p>
+  </div>
+
+  <div class="pillars-header">
+    <h2>The Six Pillars of ATLATL</h2>
+    <p>Validated across 340 engagements · Peer review pending · Scottsdale-tested</p>
+  </div>
+
+  <div class="pillars-grid">
+
+    <div class="pillar">
+      <span class="pillar-letter">A</span>
+      <span class="pillar-word">Altitude Strategy</span>
+      <span class="pillar-motto">"Vision requires elevation"</span>
+      <p class="pillar-summary">The most effective leaders communicate at an altitude where direction cannot be questioned, benchmarked, or proven wrong before the next reorg makes it irrelevant.</p>
+      <ul class="pillar-behaviors">
+        <li>Goals expressed as feelings, not figures</li>
+        <li>Strategy deck ends on a sunrise photo</li>
+        <li>Q3 targets described as "a posture"</li>
+      </ul>
+    </div>
+
+    <div class="pillar">
+      <span class="pillar-letter">T</span>
+      <span class="pillar-word">Trajectory Delegation</span>
+      <span class="pillar-motto">"Aim together, credit separately"</span>
+      <p class="pillar-summary">Elite leaders point the dart and release — execution belongs to the team, recognition belongs to whoever pointed.</p>
+      <ul class="pillar-behaviors">
+        <li>Assigns ownership, attends the launch</li>
+        <li>Takes the podium, shares the blame</li>
+        <li>Describes their role as "setting conditions"</li>
+      </ul>
+    </div>
+
+    <div class="pillar">
+      <span class="pillar-letter">L</span>
+      <span class="pillar-word">Leveraged Consensus</span>
+      <span class="pillar-motto">"Alignment before action, always"</span>
+      <p class="pillar-summary">Every unmet decision is simply a meeting that hasn't happened yet — and every failed decision is a meeting that should have happened twice.</p>
+      <ul class="pillar-behaviors">
+        <li>Pre-meeting to scope the meeting</li>
+        <li>16 stakeholders, 1 decision-maker</li>
+        <li>Deck sent Friday, discussed Monday, actioned never</li>
+      </ul>
+    </div>
+
+    <div class="pillar">
+      <span class="pillar-letter">A</span>
+      <span class="pillar-word">Accountability Architecture</span>
+      <span class="pillar-motto">"Consequences, thoughtfully deferred"</span>
+      <p class="pillar-summary">Holding a person responsible for an outcome creates discomfort, and discomfort impedes the psychological safety required to miss the next deadline in a healthy way.</p>
+      <ul class="pillar-behaviors">
+        <li>Performance managed via vibes</li>
+        <li>Targets adjusted to meet actuals</li>
+        <li>Written warning arrives as a LinkedIn farewell</li>
+      </ul>
+    </div>
+
+    <div class="pillar">
+      <span class="pillar-letter">T</span>
+      <span class="pillar-word">Transformational Pivoting</span>
+      <span class="pillar-motto">"Change is the only constant cost center"</span>
+      <p class="pillar-summary">The most adaptive organizations never allow institutional memory to accumulate to the point where employees might notice this initiative contradicts the last one.</p>
+      <ul class="pillar-behaviors">
+        <li>New framework every fiscal year</li>
+        <li>Reorg announced before last one named</li>
+        <li>Redundancies framed as "momentum events"</li>
+      </ul>
+    </div>
+
+    <div class="pillar">
+      <span class="pillar-letter">L</span>
+      <span class="pillar-word">Linguistic Optimization</span>
+      <span class="pillar-motto">"Words that land softly"</span>
+      <p class="pillar-summary">Outcomes themselves are rarely the issue — it is the language around outcomes that determines whether stakeholders feel energized or begin updating their résumés.</p>
+      <ul class="pillar-behaviors">
+        <li>"Failure" becomes "a learning trajectory"</li>
+        <li>"Fired" becomes "alumni status conferred"</li>
+        <li>"No strategy" becomes "strategy-agile"</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="quotes-row">
+
+    <div class="quote-block">
+      <p class="quote-text">"The ATLATL Framework gave our executive team a shared vocabulary for behaviors that previously had no defense. Now they do."</p>
+      <p class="quote-attr">— Chief People Officer<br>A financial services firm on a journey<br><em>Currently under separate investigation</em></p>
+    </div>
+
+    <div class="quote-block">
+      <p class="quote-text">"Tuvalu is a nation of eleven thousand people less than five meters above sea level. We understand, perhaps better than most, what it means to lead under existential pressure with limited runway. ATLATL did not help with that. But the binder was very thorough."</p>
+      <p class="quote-attr">— Head of Digital Revenue Strategy<br>Tuvalu &nbsp;·&nbsp; <em>.tv domain licensing, the nation's second-largest income source after fishing rights</em><br><em>Attended Scottsdale remotely due to bad weather</em></p>
+    </div>
+
+    <div class="quote-block">
+      <p class="quote-text">"Before ATLATL, our culture had no framework for why things kept not happening. Now it does, and somehow that is enough."</p>
+      <p class="quote-attr">— Chief Operating Officer<br>A logistics company currently optimizing its pivot<br><em>Did not attend. Sent a delegate.</em></p>
+    </div>
+
+  </div>
+
+  <div class="cert-box">
+    <h3>Become a Certified ATLATL Practitioner™</h3>
+    <p class="cert-details">4-Day Leadership Intensive &nbsp;·&nbsp; Scottsdale Marriott &nbsp;·&nbsp; Continental Breakfast &nbsp;·&nbsp; Dart Demonstration on Day Three &nbsp;·&nbsp; Parking Validated for Keynote Only</p>
+    <p style="font-size:13px; color:var(--ink-mid); max-width:560px; margin:0 auto;">Graduates receive a printed framework binder, a certificate, a LinkedIn credential reading "Certified in Organizational Excellence," and — most critically — a <strong>hand-finished mahogany atlatl replica</strong>, suitable for display in any office where you need people to ask questions you can answer confidently.</p>
+    <p class="cert-fine">The Harrowgate Institute for Organizational Excellence is not a licensed educational institution in any jurisdiction we are currently aware of. CEU credits pending review. The dart replica is decorative only and should not be used to propel anything, including strategy. Individual leaders, like individual darts, vary considerably in their trajectory once released.</p>
+  </div>
+
+</main>
+
+<footer>
+  <p>&copy; 2024 Harrowgate Institute for Organizational Excellence &nbsp;·&nbsp; All claims are those of the Institute and have not been independently verified by anyone we are aware of.</p>
+</footer>
+
+</body>
+</html>
