@@ -565,8 +565,8 @@ async function run() {
   console.log(`   Angle: ${brief.angle}`);
   console.log(`   Source: ${brief.sourcePublication}`);
 
-  console.log("⏳ Waiting 65s for rate limit window...");
-  await sleep(65000);
+  console.log("⏳ Waiting 165s for rate limit window...");
+  await sleep(165000);
 
   console.log("✍️  WRITER AGENT: Generating article...");
   const articleBody = await callClaude(
