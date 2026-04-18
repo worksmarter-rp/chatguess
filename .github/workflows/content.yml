@@ -2,8 +2,8 @@ name: Govment.org — Auto-generate satirical content
 
 on:
   schedule:
-    # Every Monday and Thursday at 10am UTC (6am Eastern)
-    - cron: '0 10 * * 1,4'
+    # Every Tuesday and Saturday at 10am UTC (6am Eastern)
+    - cron: '0 10 * * 2,6'
   workflow_dispatch:
     # Allows manual trigger from GitHub Actions tab anytime
 
