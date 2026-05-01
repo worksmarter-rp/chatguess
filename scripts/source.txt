@@ -1,0 +1,17 @@
+# GOVMENT.ORG — MANUAL SOURCE INPUT
+# ─────────────────────────────────────────────────────────────
+# To trigger a manual article, replace EVERYTHING below this
+# comment block with ONE of the following and commit the file.
+# The pipeline will delete this file after reading it.
+# If this file contains only comments, pipeline runs in auto-Scout mode.
+#
+# OPTION A — Paste a real article URL:
+#   https://www.nbcnews.com/politics/your-article-here
+#
+# OPTION B — Describe a fictional storyline:
+#   Congress forms a bipartisan committee to investigate why
+#   the previous bipartisan committee didn't investigate anything.
+#   The new committee's first act is to schedule a meeting.
+#
+# ─────────────────────────────────────────────────────────────
+# DELETE FROM HERE DOWN AND REPLACE WITH YOUR URL OR STORYLINE
