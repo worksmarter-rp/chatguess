@@ -14,4 +14,4 @@
 #   The new committee's first act is to schedule a meeting.
 #
 # ─────────────────────────────────────────────────────────────
-# DELETE FROM HERE DOWN AND REPLACE WITH YOUR URL OR STORYLINE
+https://www.scrippsnews.com/us-news/military/pentagon-inks-deals-with-tech-giants-in-move-to-become-ai-first-fighting-force
