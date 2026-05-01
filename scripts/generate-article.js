@@ -256,12 +256,12 @@ function buildArticlePage(brief, bodyHtml, allArticles) {
   <div class="article-body">
     ${bodyHtml}
   </div>
-  <div class="source-box">
+  <div class="source-box" style="display:${brief.hasSource ? 'flex' : 'none'}">
     <div class="source-icon">&#128240;</div>
     <div>
-      <div class="source-label">Read the Actual Story &mdash; ${brief.sourcePublication}</div>
-      <div class="source-title">${brief.sourceTitle}</div>
-      <a href="${brief.sourceUrl}" target="_blank" rel="noopener noreferrer">Read the full report at ${brief.sourcePublication} &rarr;</a>
+      <div class="source-label">Read the Actual Story &mdash; ${brief.sourcePublication || ''}</div>
+      <div class="source-title">${brief.sourceTitle || ''}</div>
+      <a href="${brief.sourceUrl || '#'}" target="_blank" rel="noopener noreferrer">Read the full report at ${brief.sourcePublication || ''} &rarr;</a>
     </div>
   </div>
   <div class="tags">
@@ -543,30 +543,126 @@ function updateArticlesJson(brief) {
   return articles;
 }
 
+// ─── SOURCE PROMPTS BY MODE ───────────────────────────────
+const URL_SCOUT_SYSTEM = `You are the chief satirist for govment.org. You have been given a specific 
+real news article URL. Fetch and read it, then return a JSON brief to satirize it.
+
+Return ONLY a valid JSON object, no preamble, no markdown fences:
+{
+  "headline": "The satirical headline",
+  "deck": "One sentence subtitle that lands the joke",
+  "excerpt": "Two sentence teaser for the homepage card",
+  "angle": "The satirical approach in one sentence",
+  "sourceUrl": "The URL provided",
+  "sourcePublication": "Name of the publication from the article",
+  "sourceTitle": "The real headline of the article",
+  "imagePrompt": "DALL-E 3 prompt: photojournalism style, desaturated sepia tones, no readable text, AP wire photo aesthetic, no watermarks",
+  "imageFilename": "slug-style-name-no-extension",
+  "category": "One of: Executive Branch | Fiscal Mysteries | Legislative Achievement | Constitutional Paradoxes | War & Stuff | Science & Policy | Job Postings",
+  "tags": ["tag1", "tag2", "tag3", "tag4"]
+}`;
+
+const STORYLINE_SCOUT_SYSTEM = `You are the chief satirist for govment.org. You have been given a 
+fictional storyline or premise to satirize. There is no real source article — this is invented satire.
+
+Develop the premise into a full satirical brief. Set sourceUrl and sourcePublication to null.
+sourceTitle should be a plausible-sounding fake wire headline.
+
+Return ONLY a valid JSON object, no preamble, no markdown fences:
+{
+  "headline": "The satirical headline",
+  "deck": "One sentence subtitle that lands the joke",
+  "excerpt": "Two sentence teaser for the homepage card",
+  "angle": "The satirical approach in one sentence",
+  "sourceUrl": null,
+  "sourcePublication": null,
+  "sourceTitle": "A plausible fake wire headline for this premise",
+  "imagePrompt": "DALL-E 3 prompt: photojournalism style, desaturated sepia tones, no readable text, AP wire photo aesthetic, no watermarks",
+  "imageFilename": "slug-style-name-no-extension",
+  "category": "One of: Executive Branch | Fiscal Mysteries | Legislative Achievement | Constitutional Paradoxes | War & Stuff | Science & Policy | Job Postings",
+  "tags": ["tag1", "tag2", "tag3", "tag4"]
+}`;
+
 // ─── MAIN ─────────────────────────────────────────────────
 async function run() {
-  console.log("🔍 SCOUT AGENT: Searching for today's best satirical target...");
 
-  const scoutRaw = await callClaude(
-    SCOUT_SYSTEM,
-    `Today is ${new Date().toDateString()}. Search the web for today's U.S. political and government news. Find the single best story to satirize and return the JSON brief.`,
-    true
-  );
+  // ── Determine mode from source.txt ──────────────────────
+  const SOURCE_FILE = path.join(ROOT, "scripts", "source.txt");
+  let mode       = "scout";      // "scout" | "url" | "storyline"
+  let sourceInput = null;
+
+  if (fs.existsSync(SOURCE_FILE)) {
+    const raw = fs.readFileSync(SOURCE_FILE, "utf8");
+    // Strip comment lines and blank lines
+    sourceInput = raw
+      .split("\n")
+      .filter((l) => !l.trim().startsWith("#") && l.trim().length > 0)
+      .join("\n")
+      .trim();
+    fs.unlinkSync(SOURCE_FILE);  // delete immediately so it doesn't re-trigger
+
+    if (!sourceInput) {
+      // File existed but contained only comments — treat as auto-Scout
+      console.log("🔍 MODE: AUTO-SCOUT (source.txt was empty/comments only)");
+    } else if (sourceInput.startsWith("http://") || sourceInput.startsWith("https://")) {
+      mode = "url";
+      console.log(`📌 MODE: URL SOURCE`);
+      console.log(`   ${sourceInput}`);
+    } else {
+      mode = "storyline";
+      console.log(`✏️  MODE: STORYLINE SOURCE`);
+      console.log(`   "${sourceInput}"`);
+    }
+  } else {
+    console.log("🔍 MODE: AUTO-SCOUT");
+  }
+
+  // ── Scout / Brief generation ─────────────────────────────
+  let scoutRaw;
+
+  if (mode === "scout") {
+    console.log("   Searching for today's best satirical target...");
+    scoutRaw = await callClaude(
+      SCOUT_SYSTEM,
+      `Today is ${new Date().toDateString()}. Search the web for today's U.S. political and government news. Find the single best story to satirize and return the JSON brief.`,
+      true  // use web search
+    );
+  } else if (mode === "url") {
+    console.log("   Fetching and analyzing source article...");
+    scoutRaw = await callClaude(
+      URL_SCOUT_SYSTEM,
+      `Here is the source article URL to satirize:\n${sourceInput}\n\nFetch it and return the JSON brief.`,
+      true  // use web search to fetch the URL
+    );
+  } else {
+    // storyline — no web search needed
+    console.log("   Developing storyline into satirical brief...");
+    scoutRaw = await callClaude(
+      STORYLINE_SCOUT_SYSTEM,
+      `Here is the storyline/premise to develop into a satirical article:\n\n${sourceInput}\n\nReturn the JSON brief.`,
+      false
+    );
+  }
 
   let brief;
   try {
     const clean = scoutRaw.replace(/```json|```/g, "").trim();
     brief = JSON.parse(clean.match(/\{[\s\S]*\}/)[0]);
   } catch (e) {
-    throw new Error("Scout JSON parse failed: " + scoutRaw.slice(0, 300));
+    throw new Error("Brief JSON parse failed: " + scoutRaw.slice(0, 300));
   }
   brief.slug = slugify(brief.headline);
-  console.log(`✅ SCOUT: "${brief.headline}"`);
+  brief.hasSource = !!brief.sourceUrl;  // flag for template
+  console.log(`✅ BRIEF: "${brief.headline}"`);
   console.log(`   Angle: ${brief.angle}`);
-  console.log(`   Source: ${brief.sourcePublication}`);
+  if (brief.hasSource) console.log(`   Source: ${brief.sourcePublication}`);
+  else console.log(`   Source: None (original storyline)`);
 
-  console.log("⏳ Waiting 165s for rate limit window...");
-  await sleep(165000);
+  // ── Rate limit pause (scout and url modes hit web search) ─
+  if (mode === "scout" || mode === "url") {
+    console.log("⏳ Waiting 65s for rate limit window...");
+    await sleep(65000);
+  }
 
   console.log("✍️  WRITER AGENT: Generating article...");
   const articleBody = await callClaude(
@@ -605,10 +701,12 @@ async function run() {
 
   console.log("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
   console.log("PIPELINE COMPLETE");
+  console.log(`Mode    : ${mode.toUpperCase()}`);
   console.log(`Article : ${brief.slug}.html`);
   console.log(`Image   : ${brief.imageFilename}.png`);
   console.log(`Category: ${brief.category}`);
-  console.log(`Source  : ${brief.sourceUrl}`);
+  if (brief.hasSource) console.log(`Source  : ${brief.sourceUrl}`);
+  else console.log(`Source  : Original storyline — no source link`);
   console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
 }
 
