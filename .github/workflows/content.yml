@@ -2,8 +2,8 @@ name: Govment.org — Auto-generate satirical content
 
 on:
   schedule:
-    # Every Monday and Thursday at 10am UTC (6am Eastern)
-    - cron: '0 10 * * 1,4'
+    # Every Wednesday and Saturday at 10am UTC (6am Eastern)
+    - cron: '0 10 * * 3,7'
   workflow_dispatch:
     # Allows manual trigger from GitHub Actions tab anytime
 
@@ -16,6 +16,7 @@ jobs:
 
     permissions:
       contents: write
+      pages: write
 
     steps:
       - name: Checkout repo
@@ -41,4 +42,12 @@ jobs:
           commit_message: "🤖 Auto-published: new Govment.org article"
           commit_user_name: "Govment Bot"
           commit_user_email: "bot@govment.org"
-          file_pattern: "*.html *.png articles.json scripts/last-image-prompt.json scripts/source.txt"
+          file_pattern: "*.html *.png articles.json scripts/last-image-prompt.json scripts/balance-log.txt"
+
+      - name: Purge GitHub Pages cache
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/worksmarter-rp/chatguess/pages/deployments
+        continue-on-error: true
