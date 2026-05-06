@@ -2,7 +2,7 @@ name: Govment Automation
 
 on:
   schedule:
-    - cron: '0 18 * * 3,7'
+    - cron: '40 17 * * 3,7'
   workflow_dispatch:
 
 env:
