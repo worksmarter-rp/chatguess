@@ -1,5 +1,5 @@
 // govment.org — Automated Content Pipeline v2
-// Scout → Writer → DALL-E Image → articles.json → index.html rebuild
+// Scout → Writer → gpt-image-1 Image → articles.json → index.html rebuild
 // Run: node scripts/generate-article.js
 
 const fs    = require("fs");
@@ -71,15 +71,15 @@ async function callClaude(systemPrompt, userMessage, useWebSearch = false) {
     .filter(Boolean).join("\n");
 }
 
-// ─── OPENAI DALL-E 3 ──────────────────────────────────────
+// ─── OPENAI gpt-image-1  ──────────────────────────────────────
 async function generateImage(prompt, filename) {
-  console.log("🎨 IMAGE AGENT: Calling DALL-E 3...");
+  console.log("🎨 IMAGE AGENT: Calling gpt-image-1 ...");
   const response = await httpsPost(
     "api.openai.com", "/v1/images/generations",
     { "Authorization": `Bearer ${process.env.OPENAI_API_KEY}` },
-    { model: "dall-e-3", prompt, size: "1792x1024", quality: "standard", n: 1 }
+    { model: "gpt-image-1", prompt, size: "1536x1024", quality: "standard", n: 1 }
   );
-  if (response.error) throw new Error(`DALL-E: ${response.error.message}`);
+  if (response.error) throw new Error(`gpt-image-1: ${response.error.message}`);
   const imageUrl = response.data[0].url;
   console.log("   Downloading image...");
   const buf = await httpsGet(imageUrl);
@@ -118,7 +118,7 @@ Return ONLY a valid JSON object, no preamble, no markdown fences:
   "sourceUrl": "URL of the real news article",
   "sourcePublication": "Name of publication e.g. NBC News",
   "sourceTitle": "Real headline of the source article",
-  "imagePrompt": "DALL-E 3 prompt: photojournalism style, desaturated sepia tones, no readable text, AP wire photo aesthetic, no watermarks",
+  "imagePrompt": "gpt-image-1 prompt: photojournalism style, desaturated sepia tones, no readable text, AP wire photo aesthetic, no watermarks",
   "imageFilename": "slug-style-name-no-extension",
   "category": "One of: Executive Branch | Fiscal Mysteries | Legislative Achievement | Constitutional Paradoxes | War & Stuff | Science & Policy | Job Postings",
   "tags": ["tag1", "tag2", "tag3", "tag4"]
