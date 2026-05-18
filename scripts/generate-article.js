@@ -1,5 +1,5 @@
 // govment.org — Automated Content Pipeline v2
-// Scout → Writer → gpt-image-1 Image → articles.json → index.html rebuild
+// Scout → Writer → DALL-E Image → articles.json → index.html rebuild
 // Run: node scripts/generate-article.js
 
 const fs    = require("fs");
@@ -45,6 +45,26 @@ function httpsGet(url) {
   });
 }
 
+// JSON GET helper for balance endpoints
+function httpsGet_json(hostname, urlPath, headers) {
+  return new Promise((resolve, reject) => {
+    const req = https.request(
+      { hostname, path: urlPath, method: "GET",
+        headers: { ...headers, "Content-Type": "application/json" } },
+      (res) => {
+        let raw = "";
+        res.on("data", (c) => (raw += c));
+        res.on("end", () => {
+          try { resolve(JSON.parse(raw)); }
+          catch (e) { reject(new Error("Bad JSON from balance endpoint: " + raw.slice(0, 100))); }
+        });
+      }
+    );
+    req.on("error", reject);
+    req.end();
+  });
+}
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // ─── CLAUDE API ───────────────────────────────────────────
@@ -71,19 +91,41 @@ async function callClaude(systemPrompt, userMessage, useWebSearch = false) {
     .filter(Boolean).join("\n");
 }
 
-// ─── OPENAI gpt-image-1  ──────────────────────────────────────
+// ─── OPENAI IMAGE GENERATION ──────────────────────────────
 async function generateImage(prompt, filename) {
-  console.log("🎨 IMAGE AGENT: Calling gpt-image-1 ...");
+  console.log("🎨 IMAGE AGENT: Calling gpt-image-1...");
   const response = await httpsPost(
     "api.openai.com", "/v1/images/generations",
     { "Authorization": `Bearer ${process.env.OPENAI_API_KEY}` },
-    { model: "gpt-image-1", prompt, size: "1536x1024", quality: "medium", n: 1 }
+    {
+      model: "gpt-image-1",
+      prompt,
+      size: "1536x1024",   // gpt-image-1 landscape — closest to old 1792x1024
+      quality: "medium",  // gpt-image-1 values: low, medium, high, auto
+      n: 1
+    }
   );
-  if (response.error) throw new Error(`gpt-image-1: ${response.error.message}`);
-  const imageUrl = response.data[0].url;
-  console.log("   Downloading image...");
-  const buf = await httpsGet(imageUrl);
-  fs.writeFileSync(path.join(ROOT, filename), buf);
+  if (response.error) throw new Error(`Image API: ${response.error.message}`);
+
+  // gpt-image-1 returns base64 by default, not a URL
+  const imageData = response.data[0].b64_json ?? null;
+  const imageUrl  = response.data[0].url ?? null;
+
+  console.log(`   Response format: ${imageData ? "base64" : imageUrl ? "url" : "unknown"}`);
+  console.log(`   Response keys: ${Object.keys(response.data[0]).join(", ")}`);
+
+  if (imageData) {
+    // base64 path
+    const buf = Buffer.from(imageData, "base64");
+    fs.writeFileSync(path.join(ROOT, filename), buf);
+  } else if (imageUrl) {
+    // URL path (fallback)
+    const buf = await httpsGet(imageUrl);
+    fs.writeFileSync(path.join(ROOT, filename), buf);
+  } else {
+    throw new Error("Image API returned neither b64_json nor url");
+  }
+
   console.log(`✅ IMAGE: Saved as ${filename}`);
 }
 
@@ -118,7 +160,7 @@ Return ONLY a valid JSON object, no preamble, no markdown fences:
   "sourceUrl": "URL of the real news article",
   "sourcePublication": "Name of publication e.g. NBC News",
   "sourceTitle": "Real headline of the source article",
-  "imagePrompt": "gpt-image-1 prompt: photojournalism style, desaturated sepia tones, no readable text, AP wire photo aesthetic, no watermarks",
+  "imagePrompt": "DALL-E 3 prompt: photojournalism style, desaturated sepia tones, no readable text, AP wire photo aesthetic, no watermarks",
   "imageFilename": "slug-style-name-no-extension",
   "category": "One of: Executive Branch | Fiscal Mysteries | Legislative Achievement | Constitutional Paradoxes | War & Stuff | Science & Policy | Job Postings",
   "tags": ["tag1", "tag2", "tag3", "tag4"]
@@ -256,12 +298,12 @@ function buildArticlePage(brief, bodyHtml, allArticles) {
   <div class="article-body">
     ${bodyHtml}
   </div>
-  <div class="source-box">
+  <div class="source-box" style="display:${brief.hasSource ? 'flex' : 'none'}">
     <div class="source-icon">&#128240;</div>
     <div>
-      <div class="source-label">Read the Actual Story &mdash; ${brief.sourcePublication}</div>
-      <div class="source-title">${brief.sourceTitle}</div>
-      <a href="${brief.sourceUrl}" target="_blank" rel="noopener noreferrer">Read the full report at ${brief.sourcePublication} &rarr;</a>
+      <div class="source-label">Read the Actual Story &mdash; ${brief.sourcePublication || ''}</div>
+      <div class="source-title">${brief.sourceTitle || ''}</div>
+      <a href="${brief.sourceUrl || '#'}" target="_blank" rel="noopener noreferrer">Read the full report at ${brief.sourcePublication || ''} &rarr;</a>
     </div>
   </div>
   <div class="tags">
@@ -543,30 +585,190 @@ function updateArticlesJson(brief) {
   return articles;
 }
 
+// ─── SOURCE PROMPTS BY MODE ───────────────────────────────
+const URL_SCOUT_SYSTEM = `You are the chief satirist for govment.org. You have been given a specific 
+real news article URL. Fetch and read it, then return a JSON brief to satirize it.
+
+Return ONLY a valid JSON object, no preamble, no markdown fences:
+{
+  "headline": "The satirical headline",
+  "deck": "One sentence subtitle that lands the joke",
+  "excerpt": "Two sentence teaser for the homepage card",
+  "angle": "The satirical approach in one sentence",
+  "sourceUrl": "The URL provided",
+  "sourcePublication": "Name of the publication from the article",
+  "sourceTitle": "The real headline of the article",
+  "imagePrompt": "DALL-E 3 prompt: photojournalism style, desaturated sepia tones, no readable text, AP wire photo aesthetic, no watermarks",
+  "imageFilename": "slug-style-name-no-extension",
+  "category": "One of: Executive Branch | Fiscal Mysteries | Legislative Achievement | Constitutional Paradoxes | War & Stuff | Science & Policy | Job Postings",
+  "tags": ["tag1", "tag2", "tag3", "tag4"]
+}`;
+
+const STORYLINE_SCOUT_SYSTEM = `You are the chief satirist for govment.org. You have been given a 
+fictional storyline or premise to satirize. There is no real source article — this is invented satire.
+
+Develop the premise into a full satirical brief. Set sourceUrl and sourcePublication to null.
+sourceTitle should be a plausible-sounding fake wire headline.
+
+Return ONLY a valid JSON object, no preamble, no markdown fences:
+{
+  "headline": "The satirical headline",
+  "deck": "One sentence subtitle that lands the joke",
+  "excerpt": "Two sentence teaser for the homepage card",
+  "angle": "The satirical approach in one sentence",
+  "sourceUrl": null,
+  "sourcePublication": null,
+  "sourceTitle": "A plausible fake wire headline for this premise",
+  "imagePrompt": "DALL-E 3 prompt: photojournalism style, desaturated sepia tones, no readable text, AP wire photo aesthetic, no watermarks",
+  "imageFilename": "slug-style-name-no-extension",
+  "category": "One of: Executive Branch | Fiscal Mysteries | Legislative Achievement | Constitutional Paradoxes | War & Stuff | Science & Policy | Job Postings",
+  "tags": ["tag1", "tag2", "tag3", "tag4"]
+}`;
+
+// ─── BALANCE CHECK ────────────────────────────────────────
+async function checkBalances() {
+  const timestamp = new Date().toISOString();
+  const date      = new Date().toLocaleDateString("en-US", { month:"short", day:"2-digit", year:"numeric" });
+  let log = `\n━━━ ${date} · ${timestamp} ━━━\n`;
+
+  // ── Anthropic ──────────────────────────────────────────
+  try {
+    const res = await httpsGet_json(
+      "api.anthropic.com",
+      "/v1/organizations/me/usage",
+      { "x-api-key": process.env.ANTHROPIC_API_KEY,
+        "anthropic-version": "2023-06-01" }
+    );
+    // Field name may vary — try known variants
+    const balance =
+      res.credit_balance_usd ??
+      res.balance ??
+      res.credits_remaining ??
+      null;
+    if (balance !== null) {
+      log += `Anthropic : $${parseFloat(balance).toFixed(4)} remaining\n`;
+    } else {
+      // Endpoint responded but field unknown — log raw keys for debugging
+      log += `Anthropic : responded but field unknown. Keys: ${Object.keys(res).join(", ")}\n`;
+      log += `            → check console.anthropic.com/settings/billing\n`;
+    }
+  } catch (e) {
+    log += `Anthropic : fetch failed (${e.message.slice(0, 60)})\n`;
+    log += `            → check console.anthropic.com/settings/billing\n`;
+  }
+
+  // ── OpenAI ─────────────────────────────────────────────
+  try {
+    // Usage endpoint: spend this billing period
+    const now   = new Date();
+    const year  = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day   = String(now.getDate()).padStart(2, "0");
+
+    const res = await httpsGet_json(
+      "api.openai.com",
+      `/v1/usage?date=${year}-${month}-${day}`,
+      { "Authorization": `Bearer ${process.env.OPENAI_API_KEY}` }
+    );
+    const totalCents = res.total_usage ?? null;
+    if (totalCents !== null) {
+      log += `OpenAI    : $${(totalCents / 100).toFixed(4)} used today\n`;
+    } else {
+      log += `OpenAI    : responded but usage field unknown\n`;
+    }
+    log += `            → balance: platform.openai.com/settings/organization/billing\n`;
+  } catch (e) {
+    log += `OpenAI    : fetch failed (${e.message.slice(0, 60)})\n`;
+    log += `            → check platform.openai.com/settings/organization/billing\n`;
+  }
+
+  // ── Write to log file ──────────────────────────────────
+  const logPath = path.join(ROOT, "scripts", "balance-log.txt");
+  if (!fs.existsSync(logPath)) fs.writeFileSync(logPath, "", "utf8");
+  fs.appendFileSync(logPath, log, "utf8");
+  console.log(log);
+}
+
 // ─── MAIN ─────────────────────────────────────────────────
 async function run() {
-  console.log("🔍 SCOUT AGENT: Searching for today's best satirical target...");
 
-  const scoutRaw = await callClaude(
-    SCOUT_SYSTEM,
-    `Today is ${new Date().toDateString()}. Search the web for today's U.S. political and government news. Find the single best story to satirize and return the JSON brief.`,
-    true
-  );
+  // ── Determine mode from source.txt ──────────────────────
+  const SOURCE_FILE = path.join(ROOT, "scripts", "source.txt");
+  let mode       = "scout";      // "scout" | "url" | "storyline"
+  let sourceInput = null;
+
+  if (fs.existsSync(SOURCE_FILE)) {
+    const raw = fs.readFileSync(SOURCE_FILE, "utf8");
+    // Strip comment lines and blank lines
+    sourceInput = raw
+      .split("\n")
+      .filter((l) => !l.trim().startsWith("#") && l.trim().length > 0)
+      .join("\n")
+      .trim();
+    fs.unlinkSync(SOURCE_FILE);  // delete immediately so it doesn't re-trigger
+
+    if (!sourceInput) {
+      // File existed but contained only comments — treat as auto-Scout
+      console.log("🔍 MODE: AUTO-SCOUT (source.txt was empty/comments only)");
+    } else if (sourceInput.startsWith("http://") || sourceInput.startsWith("https://")) {
+      mode = "url";
+      console.log(`📌 MODE: URL SOURCE`);
+      console.log(`   ${sourceInput}`);
+    } else {
+      mode = "storyline";
+      console.log(`✏️  MODE: STORYLINE SOURCE`);
+      console.log(`   "${sourceInput}"`);
+    }
+  } else {
+    console.log("🔍 MODE: AUTO-SCOUT");
+  }
+
+  // ── Scout / Brief generation ─────────────────────────────
+  let scoutRaw;
+
+  if (mode === "scout") {
+    console.log("   Searching for today's best satirical target...");
+    scoutRaw = await callClaude(
+      SCOUT_SYSTEM,
+      `Today is ${new Date().toDateString()}. Search the web for today's U.S. political and government news. Find the single best story to satirize and return the JSON brief.`,
+      true  // use web search
+    );
+  } else if (mode === "url") {
+    console.log("   Fetching and analyzing source article...");
+    scoutRaw = await callClaude(
+      URL_SCOUT_SYSTEM,
+      `Here is the source article URL to satirize:\n${sourceInput}\n\nFetch it and return the JSON brief.`,
+      true  // use web search to fetch the URL
+    );
+  } else {
+    // storyline — no web search needed
+    console.log("   Developing storyline into satirical brief...");
+    scoutRaw = await callClaude(
+      STORYLINE_SCOUT_SYSTEM,
+      `Here is the storyline/premise to develop into a satirical article:\n\n${sourceInput}\n\nReturn the JSON brief.`,
+      false
+    );
+  }
 
   let brief;
   try {
     const clean = scoutRaw.replace(/```json|```/g, "").trim();
     brief = JSON.parse(clean.match(/\{[\s\S]*\}/)[0]);
   } catch (e) {
-    throw new Error("Scout JSON parse failed: " + scoutRaw.slice(0, 300));
+    throw new Error("Brief JSON parse failed: " + scoutRaw.slice(0, 300));
   }
   brief.slug = slugify(brief.headline);
-  console.log(`✅ SCOUT: "${brief.headline}"`);
+  brief.hasSource = !!brief.sourceUrl;  // flag for template
+  console.log(`✅ BRIEF: "${brief.headline}"`);
   console.log(`   Angle: ${brief.angle}`);
-  console.log(`   Source: ${brief.sourcePublication}`);
+  if (brief.hasSource) console.log(`   Source: ${brief.sourcePublication}`);
+  else console.log(`   Source: None (original storyline)`);
 
-  console.log("⏳ Waiting 65s for rate limit window...");
-  await sleep(125000);
+  // ── Rate limit pause (scout and url modes hit web search) ─
+  if (mode === "scout" || mode === "url") {
+    console.log("⏳ Waiting 65s for rate limit window...");
+    await sleep(65000);
+  }
 
   console.log("✍️  WRITER AGENT: Generating article...");
   const articleBody = await callClaude(
@@ -605,14 +807,24 @@ async function run() {
 
   console.log("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
   console.log("PIPELINE COMPLETE");
+  console.log(`Mode    : ${mode.toUpperCase()}`);
   console.log(`Article : ${brief.slug}.html`);
   console.log(`Image   : ${brief.imageFilename}.png`);
   console.log(`Category: ${brief.category}`);
-  console.log(`Source  : ${brief.sourceUrl}`);
+  if (brief.hasSource) console.log(`Source  : ${brief.sourceUrl}`);
+  else console.log(`Source  : Original storyline — no source link`);
   console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
+  // Balance check — fully isolated, never affects pipeline outcome
+  try {
+    await checkBalances();
+  } catch (e) {
+    console.log("⚠️  Balance check failed silently:", e.message);
+  }
 }
 
 run().catch((err) => {
-  console.error("❌ Pipeline error:", err.message);
+  console.error("❌ Pipeline error:", err.message || err);
+  console.error("Stack:", err.stack || "no stack");
   process.exit(1);
 });
