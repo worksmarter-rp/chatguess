@@ -77,7 +77,7 @@ async function generateImage(prompt, filename) {
   const response = await httpsPost(
     "api.openai.com", "/v1/images/generations",
     { "Authorization": `Bearer ${process.env.OPENAI_API_KEY}` },
-    { model: "gpt-image-1", prompt, size: "1536x1024", quality: "standard", n: 1 }
+    { model: "gpt-image-1", prompt, size: "1536x1024", quality: "medium", n: 1 }
   );
   if (response.error) throw new Error(`gpt-image-1: ${response.error.message}`);
   const imageUrl = response.data[0].url;
