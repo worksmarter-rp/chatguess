@@ -767,7 +767,7 @@ async function run() {
   // ── Rate limit pause (scout and url modes hit web search) ─
   if (mode === "scout" || mode === "url") {
     console.log("⏳ Waiting 65s for rate limit window...");
-    await sleep(65000);
+    await sleep(125000);
   }
 
   console.log("✍️  WRITER AGENT: Generating article...");
