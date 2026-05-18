@@ -566,7 +566,7 @@ async function run() {
   console.log(`   Source: ${brief.sourcePublication}`);
 
   console.log("⏳ Waiting 65s for rate limit window...");
-  await sleep(65000);
+  await sleep(125000);
 
   console.log("✍️  WRITER AGENT: Generating article...");
   const articleBody = await callClaude(
