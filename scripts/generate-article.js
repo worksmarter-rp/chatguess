@@ -7,7 +7,7 @@ const path  = require("path");
 const https = require("https");
 
 // ─── CONFIG ───────────────────────────────────────────────
-const CLAUDE_MODEL  = "claude-sonnet-4-20250514";
+const CLAUDE_MODEL  = "claude-sonnet-4-6";
 const ROOT          = path.join(__dirname, "..");
 const ARTICLES_JSON = path.join(ROOT, "articles.json");
 const INDEX_HTML    = path.join(ROOT, "index.html");
