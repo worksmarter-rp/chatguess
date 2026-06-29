@@ -88,3 +88,9 @@ Anthropic : responded but field unknown. Keys: type, error, request_id
             → check console.anthropic.com/settings/billing
 OpenAI    : responded but usage field unknown
             → balance: platform.openai.com/settings/organization/billing
+
+━━━ Jun 29, 2026 · 2026-06-29T09:27:42.529Z ━━━
+Anthropic : responded but field unknown. Keys: type, error, request_id
+            → check console.anthropic.com/settings/billing
+OpenAI    : responded but usage field unknown
+            → balance: platform.openai.com/settings/organization/billing
